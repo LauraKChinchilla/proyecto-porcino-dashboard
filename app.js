@@ -278,23 +278,30 @@
   }
 
   /* ---------------- Frescura de datos ---------------- */
-  let lastRun = null;
+  let lastRun = null, live = false, liveSince = null;
   function renderFresh() {
     if (!DATA) return;
     const mods = (DATA.archivos || []).map(a => a.modificado).filter(Boolean).sort();
     const lastMod = mods[mods.length - 1];
-    $('fRead').innerHTML = lastRun ? `<b>${ago(lastRun)}</b> <span class="muted">(${fmtTS(lastRun)})</span>` : '<span class="muted">consultando…</span>';
+    if (live) $('fRead').innerHTML = `<b>hace menos de 2 min</b> <span class="muted">· lectura continua activa desde ${fmtTS(liveSince)}</span>`;
+    else $('fRead').innerHTML = lastRun ? `<b>${ago(lastRun)}</b> <span class="muted">(${fmtTS(lastRun)})</span>` : '<span class="muted">consultando…</span>';
     $('fMod').innerHTML = lastMod ? `<b>${ago(lastMod)}</b> <span class="muted">(${fmtTS(lastMod)})</span>` : '—';
     $('fFiles').innerHTML = (DATA.archivos || []).map(a => `${esc(a.nombre)} · ${fmtTS(a.modificado)}`).join('<br>');
-    const stale = lastRun && (Date.now() - new Date(lastRun)) > 45 * 60e3;
+    const stale = !live && lastRun && (Date.now() - new Date(lastRun)) > 30 * 60e3;
     $('liveDot').className = 'dot ' + (stale ? 'stale' : 'live');
     $('liveTxt').textContent = stale ? 'Lectura atrasada' : 'En vivo';
   }
   async function checkRun() {
     try {
-      const r = await fetch(`https://api.github.com/repos/${REPO}/actions/workflows/${WORKFLOW}/runs?per_page=5&status=completed`, { cache: 'no-store' });
-      if (r.ok) { const j = await r.json(); const ok = (j.workflow_runs || []).find(x => x.conclusion === 'success'); if (ok) lastRun = ok.updated_at; }
-    } catch (e) { /* sin conexión a la API: se muestra solo la fecha de los Excel */ }
+      const r = await fetch(`https://api.github.com/repos/${REPO}/actions/workflows/${WORKFLOW}/runs?per_page=10`, { cache: 'no-store' });
+      if (r.ok) {
+        const runs = (await r.json()).workflow_runs || [];
+        const act = runs.find(x => x.status === 'in_progress');
+        live = !!act; liveSince = act ? (act.run_started_at || act.created_at) : null;
+        const ok = runs.find(x => x.status === 'completed' && x.conclusion === 'success');
+        if (ok) lastRun = ok.updated_at;
+      }
+    } catch (e) { /* sin acceso a la API: se muestra la fecha de los datos */ }
     if (!lastRun && DATA) lastRun = DATA.generado;
     renderFresh();
   }
