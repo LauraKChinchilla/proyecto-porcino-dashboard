@@ -120,7 +120,7 @@
     const rows = aoa(XLSX, ws);
     const titles = [];
     rows.slice(0, 3).forEach(row => (row || []).forEach((c, i) => {
-      const t = norm(c); if (/aporte/.test(t)) titles.push({ col: i, socio: /eric/.test(t) ? 'Erick' : /wili/.test(t) ? 'Wilian' : null });
+      const t = norm(c); if (/aporte/.test(t)) titles.push({ col: i, socio: /wili/.test(t) ? 'Wilian' : /eric/.test(t) ? 'Erick' : null });
     }));
     const h = findHeader(rows, [/^(activo|descri)/]);
     if (h < 0) return null;
@@ -133,6 +133,8 @@
     const items = [];
     for (const b of blocks) {
       if (!b.socio) continue;
+      const descs = rows.slice(h + 1).map(row => norm((row || [])[b.desc])).filter(Boolean);
+      b.efectivo = !b.compras && descs.filter(d => /efectivo/.test(d)).length > descs.length / 2;
       for (let r = h + 1; r < rows.length; r++) {
         const row = rows[r] || []; const d = row[b.desc];
         if (d == null || String(d).trim() === '' || /^descri/.test(norm(d))) continue;
@@ -140,8 +142,7 @@
         let tot = num(row[b.total]); const q = num(row[b.qty]), u = num(row[b.unit]);
         if (tot == null && q != null && u != null) tot = q * u;
         if (tot == null || tot === 0) continue;
-        const efectivo = /efectivo|comision/.test(norm(d)) && !b.compras;
-        items.push({ socio: b.socio, tipo: b.compras ? 'Compra con aporte' : (efectivo ? 'Efectivo' : 'Especie'),
+        items.push({ socio: b.socio, tipo: b.compras ? 'Compra con aporte' : (b.efectivo ? 'Efectivo' : 'Especie'),
           fecha: toISO(row[b.fecha]), descripcion: String(d).trim(), cantidad: q, unitario: u, total: tot, cat: catInversion(d) });
       }
     }
