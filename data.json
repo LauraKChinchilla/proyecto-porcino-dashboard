@@ -1,0 +1,2001 @@
+{
+ "generado": "2026-10-30T02:13:52.461Z",
+ "fuente": "OneDrive · Proyecto_Porcino",
+ "archivos": [
+  {
+   "nombre": "Proyecto Porcino.xlsx",
+   "modificado": "2026-10-30T01:13:12Z",
+   "por": "Guest Contributor"
+  },
+  {
+   "nombre": "Sistema_Contable_Granja_Porcina.xlsx",
+   "modificado": "2026-10-30T01:13:12Z",
+   "por": "Guest Contributor"
+  }
+ ],
+ "libro": [
+  {
+   "fila": 2,
+   "fecha": "2026-08-19",
+   "concepto": "Dinero en cuenta · Para iniciar el proceso de libro diario se registra como entrada el capital en cuenta bancaria",
+   "cantidad": 1,
+   "precio": 37874,
+   "entrada": 37874,
+   "salida": 0,
+   "cat": "Saldo inicial"
+  },
+  {
+   "fila": 3,
+   "fecha": "2026-08-19",
+   "concepto": "Teflon",
+   "cantidad": 2,
+   "precio": 10,
+   "entrada": 0,
+   "salida": 20,
+   "cat": "Materiales y mantenimiento"
+  },
+  {
+   "fila": 4,
+   "fecha": "2026-08-19",
+   "concepto": "Discos de corte",
+   "cantidad": 2,
+   "precio": 85,
+   "entrada": 0,
+   "salida": 170,
+   "cat": "Materiales y mantenimiento"
+  },
+  {
+   "fila": 5,
+   "fecha": "2026-08-19",
+   "concepto": "Bebederos",
+   "cantidad": 3,
+   "precio": 70,
+   "entrada": 0,
+   "salida": 210,
+   "cat": "Materiales y mantenimiento"
+  },
+  {
+   "fila": 6,
+   "fecha": "2026-08-19",
+   "concepto": "Compras SUAGROVET",
+   "cantidad": 1,
+   "precio": 8500,
+   "entrada": 0,
+   "salida": 8500,
+   "cat": "Sanidad e insumos"
+  },
+  {
+   "fila": 7,
+   "fecha": "2026-08-19",
+   "concepto": "Compras SUAGROVET",
+   "cantidad": 1,
+   "precio": 1455,
+   "entrada": 0,
+   "salida": 1455,
+   "cat": "Sanidad e insumos"
+  },
+  {
+   "fila": 8,
+   "fecha": null,
+   "concepto": "Venta de 3 cerdito",
+   "cantidad": 1,
+   "precio": 23800,
+   "entrada": 23800,
+   "salida": 0,
+   "cat": "Ventas"
+  },
+  {
+   "fila": 9,
+   "fecha": null,
+   "concepto": "Compras SUAGROVET",
+   "cantidad": 2,
+   "precio": 350,
+   "entrada": 0,
+   "salida": 700,
+   "cat": "Sanidad e insumos"
+  },
+  {
+   "fila": 10,
+   "fecha": null,
+   "concepto": "Compras SUAGROVET",
+   "cantidad": 1,
+   "precio": 6050,
+   "entrada": 0,
+   "salida": 6050,
+   "cat": "Sanidad e insumos"
+  },
+  {
+   "fila": 11,
+   "fecha": null,
+   "concepto": "Compra Guantes",
+   "cantidad": 1,
+   "precio": 150,
+   "entrada": 0,
+   "salida": 150,
+   "cat": "Sanidad e insumos"
+  },
+  {
+   "fila": 12,
+   "fecha": null,
+   "concepto": "Termómetro digital",
+   "cantidad": 1,
+   "precio": 150,
+   "entrada": 0,
+   "salida": 150,
+   "cat": "Sanidad e insumos"
+  },
+  {
+   "fila": 13,
+   "fecha": null,
+   "concepto": "Compra Agromont",
+   "cantidad": 1,
+   "precio": 2010,
+   "entrada": 0,
+   "salida": 2010,
+   "cat": "Sanidad e insumos"
+  },
+  {
+   "fila": 14,
+   "fecha": null,
+   "concepto": "Compra Agromont",
+   "cantidad": 1,
+   "precio": 3960,
+   "entrada": 0,
+   "salida": 3960,
+   "cat": "Sanidad e insumos"
+  },
+  {
+   "fila": 15,
+   "fecha": null,
+   "concepto": "NUTRICON",
+   "cantidad": 1,
+   "precio": 20325,
+   "entrada": 0,
+   "salida": 20325,
+   "cat": "Concentrado"
+  },
+  {
+   "fila": 16,
+   "fecha": null,
+   "concepto": "garrafa podosept",
+   "cantidad": 1,
+   "precio": 1950,
+   "entrada": 0,
+   "salida": 1950,
+   "cat": "Sanidad e insumos"
+  },
+  {
+   "fila": 17,
+   "fecha": null,
+   "concepto": "Compra en MACDEL (Tabletas de cloro y un dispensador)",
+   "cantidad": 1,
+   "precio": 790,
+   "entrada": 0,
+   "salida": 790,
+   "cat": "Sanidad e insumos"
+  },
+  {
+   "fila": 18,
+   "fecha": null,
+   "concepto": "Compra Agromont (Garrafa de yodo)",
+   "cantidad": 1,
+   "precio": 950,
+   "entrada": 0,
+   "salida": 950,
+   "cat": "Sanidad e insumos"
+  },
+  {
+   "fila": 19,
+   "fecha": null,
+   "concepto": "Compra Agromont",
+   "cantidad": 1,
+   "precio": 1200,
+   "entrada": 0,
+   "salida": 1200,
+   "cat": "Sanidad e insumos"
+  },
+  {
+   "fila": 20,
+   "fecha": null,
+   "concepto": "NUTRICON gestación",
+   "cantidad": 30,
+   "precio": 675,
+   "entrada": 0,
+   "salida": 20250,
+   "cat": "Concentrado"
+  },
+  {
+   "fila": 21,
+   "fecha": null,
+   "concepto": "NUTRICON Desarrollo",
+   "cantidad": 2,
+   "precio": 665,
+   "entrada": 0,
+   "salida": 1330,
+   "cat": "Concentrado"
+  },
+  {
+   "fila": 22,
+   "fecha": null,
+   "concepto": "Compras SUAGROVET",
+   "cantidad": 1,
+   "precio": 4480,
+   "entrada": 0,
+   "salida": 4480,
+   "cat": "Sanidad e insumos"
+  },
+  {
+   "fila": 23,
+   "fecha": null,
+   "concepto": "Cable",
+   "cantidad": 1,
+   "precio": 230,
+   "entrada": 0,
+   "salida": 230,
+   "cat": "Materiales y mantenimiento"
+  },
+  {
+   "fila": 24,
+   "fecha": null,
+   "concepto": "Concentrado",
+   "cantidad": 1,
+   "precio": 675,
+   "entrada": 0,
+   "salida": 675,
+   "cat": "Concentrado"
+  },
+  {
+   "fila": 25,
+   "fecha": null,
+   "concepto": "Venta de 3 cerdito",
+   "cantidad": 3,
+   "precio": 2300,
+   "entrada": 6900,
+   "salida": 0,
+   "cat": "Ventas"
+  },
+  {
+   "fila": 26,
+   "fecha": null,
+   "concepto": "bactrovet plata · Nutricon",
+   "cantidad": 1,
+   "precio": 325,
+   "entrada": 0,
+   "salida": 325,
+   "cat": "Concentrado"
+  },
+  {
+   "fila": 27,
+   "fecha": null,
+   "concepto": "Comision por bolsa",
+   "cantidad": 47,
+   "precio": 3700,
+   "entrada": 0,
+   "salida": 3700,
+   "cat": "Flete / comisión"
+  },
+  {
+   "fila": 28,
+   "fecha": null,
+   "concepto": "Comision por bolsa",
+   "cantidad": 16,
+   "precio": 16,
+   "entrada": 0,
+   "salida": 1280,
+   "cat": "Flete / comisión"
+  },
+  {
+   "fila": 29,
+   "fecha": null,
+   "concepto": "Compra",
+   "cantidad": 1,
+   "precio": 6400,
+   "entrada": 0,
+   "salida": 6400,
+   "cat": "Sin detalle"
+  },
+  {
+   "fila": 30,
+   "fecha": null,
+   "concepto": "Foco · Foco recargable",
+   "cantidad": 1,
+   "precio": 200,
+   "entrada": 0,
+   "salida": 200,
+   "cat": "Materiales y mantenimiento"
+  },
+  {
+   "fila": 31,
+   "fecha": null,
+   "concepto": "Discos de corte",
+   "cantidad": 4,
+   "precio": 85,
+   "entrada": 0,
+   "salida": 340,
+   "cat": "Materiales y mantenimiento"
+  },
+  {
+   "fila": 32,
+   "fecha": null,
+   "concepto": "Capital · Ingreso de capital faltante de Erick",
+   "cantidad": 1,
+   "precio": 17258,
+   "entrada": 17258,
+   "salida": 0,
+   "cat": "Aporte de socio"
+  },
+  {
+   "fila": 33,
+   "fecha": null,
+   "concepto": "Capital Erick · Ingreso de capital faltante",
+   "cantidad": 1,
+   "precio": 984,
+   "entrada": 984,
+   "salida": 0,
+   "cat": "Aporte de socio"
+  },
+  {
+   "fila": 34,
+   "fecha": null,
+   "concepto": "Capital Wiliam · Ingreso de capital faltante",
+   "cantidad": 1,
+   "precio": 984,
+   "entrada": 984,
+   "salida": 0,
+   "cat": "Aporte de socio"
+  },
+  {
+   "fila": 35,
+   "fecha": null,
+   "concepto": "venta de 7 lechones",
+   "cantidad": 7,
+   "precio": 2300,
+   "entrada": 16100,
+   "salida": 0,
+   "cat": "Ventas"
+  },
+  {
+   "fila": 36,
+   "fecha": null,
+   "concepto": "3 bolsas de concentrado",
+   "cantidad": null,
+   "precio": 2065,
+   "entrada": 0,
+   "salida": 2065,
+   "cat": "Concentrado"
+  },
+  {
+   "fila": 37,
+   "fecha": null,
+   "concepto": "4 bolsas de concentrado",
+   "cantidad": null,
+   "precio": 2740,
+   "entrada": 0,
+   "salida": 2740,
+   "cat": "Concentrado"
+  },
+  {
+   "fila": 38,
+   "fecha": null,
+   "concepto": "2 brocas y 10 tornillos",
+   "cantidad": null,
+   "precio": 268,
+   "entrada": 0,
+   "salida": 268,
+   "cat": "Materiales y mantenimiento"
+  },
+  {
+   "fila": 39,
+   "fecha": null,
+   "concepto": "antibiotico tylogan",
+   "cantidad": 1,
+   "precio": 450,
+   "entrada": 0,
+   "salida": 450,
+   "cat": "Sanidad e insumos"
+  },
+  {
+   "fila": 40,
+   "fecha": null,
+   "concepto": "venta 4 cerditos",
+   "cantidad": 4,
+   "precio": 2325,
+   "entrada": 9300,
+   "salida": 0,
+   "cat": "Ventas"
+  },
+  {
+   "fila": 41,
+   "fecha": null,
+   "concepto": "disco concreto 8 codos,  adaptadores y te de media",
+   "cantidad": null,
+   "precio": 360,
+   "entrada": 0,
+   "salida": 360,
+   "cat": "Materiales y mantenimiento"
+  },
+  {
+   "fila": 42,
+   "fecha": null,
+   "concepto": "60 ladrillos 1 bijao 1 sincel 1 peg pvc",
+   "cantidad": null,
+   "precio": 1420,
+   "entrada": 0,
+   "salida": 1420,
+   "cat": "Materiales y mantenimiento"
+  },
+  {
+   "fila": 43,
+   "fecha": null,
+   "concepto": "caja de ahujas",
+   "cantidad": null,
+   "precio": 250,
+   "entrada": 0,
+   "salida": 250,
+   "cat": "Sanidad e insumos"
+  },
+  {
+   "fila": 44,
+   "fecha": null,
+   "concepto": "galon pint anticorrosiva y 2 brochas",
+   "cantidad": null,
+   "precio": 464,
+   "entrada": 0,
+   "salida": 464,
+   "cat": "Materiales y mantenimiento"
+  },
+  {
+   "fila": 45,
+   "fecha": null,
+   "concepto": "Compra Agromont (vacuna fostera y 10 bebederos cerdos)",
+   "cantidad": null,
+   "precio": 6500,
+   "entrada": 0,
+   "salida": 6500,
+   "cat": "Sanidad e insumos"
+  },
+  {
+   "fila": 46,
+   "fecha": null,
+   "concepto": "venta 4 cerditos",
+   "cantidad": 4,
+   "precio": 9200,
+   "entrada": 9200,
+   "salida": 0,
+   "cat": "Ventas"
+  }
+ ],
+ "aportes": [
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "Cerdas Reproductoras",
+   "cantidad": 9,
+   "unitario": 14000,
+   "total": 126000,
+   "cat": "Animales"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "Padron",
+   "cantidad": 2,
+   "unitario": 14000,
+   "total": 28000,
+   "cat": "Animales"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "Jaulas de Gestacion",
+   "cantidad": 8,
+   "unitario": 3750,
+   "total": 30000,
+   "cat": "Concentrado"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "Yardas cable cometida",
+   "cantidad": 150,
+   "unitario": 30,
+   "total": 4500,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "viajes de arena (DILVER)",
+   "cantidad": 6,
+   "unitario": 900,
+   "total": 5400,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "viajes arena",
+   "cantidad": 5,
+   "unitario": 800,
+   "total": 4000,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "dias trabajo",
+   "cantidad": 5,
+   "unitario": 350,
+   "total": 1750,
+   "cat": "Mano de obra"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "costo mano de obra techo de la galera",
+   "cantidad": 1,
+   "unitario": 18000,
+   "total": 18000,
+   "cat": "Mano de obra"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "aporte compra de material",
+   "cantidad": 1,
+   "unitario": 46465,
+   "total": 46465,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "costo de la cerca",
+   "cantidad": 1,
+   "unitario": 7500,
+   "total": 7500,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "tornillos punta broca  2 pul",
+   "cantidad": 500,
+   "unitario": 2,
+   "total": 1000,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "costo planchon",
+   "cantidad": 1,
+   "unitario": 8300,
+   "total": 8300,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "cemento",
+   "cantidad": 18,
+   "unitario": 245,
+   "total": 4410,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "cemento",
+   "cantidad": 4,
+   "unitario": 245,
+   "total": 980,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "tuvos galvanizados ch 16",
+   "cantidad": 5,
+   "unitario": 340,
+   "total": 1700,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "varillas 3/8 mm",
+   "cantidad": 3,
+   "unitario": 135,
+   "total": 405,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "Tuvos de media pvc, 10 t de media, 10 codos media, 5 valvulas de media",
+   "cantidad": 1,
+   "unitario": 730,
+   "total": 730,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "comederos jaula de gestacion",
+   "cantidad": 1,
+   "unitario": 2000,
+   "total": 2000,
+   "cat": "Concentrado"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "tablas",
+   "cantidad": 3,
+   "unitario": 1350,
+   "total": 4050,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "Antibiotico bioquin",
+   "cantidad": 1,
+   "unitario": 300,
+   "total": 300,
+   "cat": "Sanidad"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "antibiotico florpro complex (no se precio)",
+   "cantidad": 1,
+   "unitario": 550,
+   "total": 550,
+   "cat": "Sanidad"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "bebederos para cerdos",
+   "cantidad": 10,
+   "unitario": 100,
+   "total": 1000,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "codos de metal hg",
+   "cantidad": 10,
+   "unitario": 45,
+   "total": 450,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "antibiotico excenel (29-03-26)",
+   "cantidad": 2,
+   "unitario": 1900,
+   "total": 3800,
+   "cat": "Sanidad"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "vacuna farrosure (29-03-26)",
+   "cantidad": 1,
+   "unitario": 1300,
+   "total": 1300,
+   "cat": "Sanidad"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "compra 20 crecimiento",
+   "cantidad": 20,
+   "unitario": 930,
+   "total": 18600,
+   "cat": "Concentrado"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "caja ahujas 1o ml",
+   "cantidad": 1,
+   "unitario": 150,
+   "total": 150,
+   "cat": "Sanidad"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "hidrolavadora",
+   "cantidad": 1,
+   "unitario": 2200,
+   "total": 2200,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "Chupones de Cerdo",
+   "cantidad": 4,
+   "unitario": 120,
+   "total": 480,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "Cable de Instalacion",
+   "cantidad": 1,
+   "unitario": 2533,
+   "total": 2533,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "4200 de interjen",
+   "cantidad": 1,
+   "unitario": 4200,
+   "total": 4200,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "Antibitico y Catosal",
+   "cantidad": 1,
+   "unitario": 2950,
+   "total": 2950,
+   "cat": "Sanidad"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "Yardas de Carpetas",
+   "cantidad": 30,
+   "unitario": 20,
+   "total": 600,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "Dinero en Efectivo Restante",
+   "cantidad": 1,
+   "unitario": -16500,
+   "total": -16500,
+   "cat": "Ajuste"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "William (Cunas De Maternidad)",
+   "cantidad": 1,
+   "unitario": 7000,
+   "total": 7000,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "antibiotico excenel",
+   "cantidad": 1,
+   "unitario": 1550,
+   "total": 1550,
+   "cat": "Sanidad"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "pintura y tiner",
+   "cantidad": 1,
+   "unitario": 800,
+   "total": 800,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "nutri cerdo gestacion",
+   "cantidad": 15,
+   "unitario": 675,
+   "total": 10125,
+   "cat": "Concentrado"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "Flete de concetrado",
+   "cantidad": 37,
+   "unitario": 100,
+   "total": 3700,
+   "cat": "Fletes y viajes"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "nutri cerdo gestacion",
+   "cantidad": 12,
+   "unitario": 665,
+   "total": 7980,
+   "cat": "Concentrado"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "nutri cerdo engorde",
+   "cantidad": 10,
+   "unitario": 665,
+   "total": 6650,
+   "cat": "Concentrado"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "viajes arena",
+   "cantidad": 3,
+   "unitario": 600,
+   "total": 1800,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "Viaje arena sernido",
+   "cantidad": 1,
+   "unitario": 800,
+   "total": 800,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "restante de los verraquitos intergen",
+   "cantidad": 1,
+   "unitario": 15500,
+   "total": 15500,
+   "cat": "Animales"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "viaje a lucerna atraer el verraquito",
+   "cantidad": 1,
+   "unitario": 1000,
+   "total": 1000,
+   "cat": "Animales"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "bionova 4",
+   "cantidad": 1,
+   "unitario": 990,
+   "total": 990,
+   "cat": "Concentrado"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "desarrollo nutricon",
+   "cantidad": 5,
+   "unitario": 760,
+   "total": 3800,
+   "cat": "Concentrado"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "angulo de un cuarto",
+   "cantidad": 1,
+   "unitario": 500,
+   "total": 500,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Wilian",
+   "tipo": "Especie",
+   "fecha": null,
+   "descripcion": "cemento",
+   "cantidad": 4,
+   "unitario": 260,
+   "total": 1040,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Efectivo",
+   "fecha": "2026-02-23",
+   "descripcion": "Efectivo",
+   "cantidad": 1,
+   "unitario": 20000,
+   "total": 20000,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Efectivo",
+   "fecha": "2026-02-27",
+   "descripcion": "Efectivo",
+   "cantidad": 1,
+   "unitario": 30000,
+   "total": 30000,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Efectivo",
+   "fecha": "2026-03-05",
+   "descripcion": "Efectivo",
+   "cantidad": 1,
+   "unitario": 90000,
+   "total": 90000,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Efectivo",
+   "fecha": "2026-03-24",
+   "descripcion": "Efectivo",
+   "cantidad": 1,
+   "unitario": 80000,
+   "total": 80000,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Efectivo",
+   "fecha": null,
+   "descripcion": "Efectivo",
+   "cantidad": 1,
+   "unitario": 30000,
+   "total": 30000,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Efectivo",
+   "fecha": "2026-04-13",
+   "descripcion": "Efectivo",
+   "cantidad": 1,
+   "unitario": 10000,
+   "total": 10000,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Efectivo",
+   "fecha": "2026-05-02",
+   "descripcion": "Efectivo",
+   "cantidad": 1,
+   "unitario": 10000,
+   "total": 10000,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Efectivo",
+   "fecha": null,
+   "descripcion": "Efectivo pago de Abodaga",
+   "cantidad": 1,
+   "unitario": 1000,
+   "total": 1000,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Efectivo",
+   "fecha": "2026-05-20",
+   "descripcion": "Efectivo",
+   "cantidad": 1,
+   "unitario": 30000,
+   "total": 30000,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Efectivo",
+   "fecha": "2026-05-31",
+   "descripcion": "Efectivo (Cunas de Maternidad)",
+   "cantidad": 1,
+   "unitario": 14000,
+   "total": 14000,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Efectivo",
+   "fecha": "2026-06-09",
+   "descripcion": "Efectivo concentrado",
+   "cantidad": 1,
+   "unitario": 20000,
+   "total": 20000,
+   "cat": "Concentrado"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Efectivo",
+   "fecha": "2026-06-22",
+   "descripcion": "efectivo antibiotivos (suagrovet)",
+   "cantidad": 1,
+   "unitario": 5000,
+   "total": 5000,
+   "cat": "Sanidad"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Efectivo",
+   "fecha": "2026-06-26",
+   "descripcion": "Efectivo",
+   "cantidad": 1,
+   "unitario": 20000,
+   "total": 20000,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Efectivo",
+   "fecha": null,
+   "descripcion": "efectivo",
+   "cantidad": 1,
+   "unitario": 2500,
+   "total": 2500,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Efectivo",
+   "fecha": "2026-09-25",
+   "descripcion": "Comision por viajes",
+   "cantidad": 1,
+   "unitario": 1280,
+   "total": 1280,
+   "cat": "Fletes y viajes"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "compra de 39 cerditos",
+   "cantidad": 39,
+   "unitario": 2000,
+   "total": 78000,
+   "cat": "Animales"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "viaje ir atraer los cerditos",
+   "cantidad": 1,
+   "unitario": 6500,
+   "total": 6500,
+   "cat": "Animales"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "bionova 2",
+   "cantidad": 4,
+   "unitario": 1200,
+   "total": 4800,
+   "cat": "Concentrado"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "Bionova 4 (precio incluyendo flete)",
+   "cantidad": 16,
+   "unitario": 1070,
+   "total": 17120,
+   "cat": "Concentrado"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "compra material para galera",
+   "cantidad": 1,
+   "unitario": 30000,
+   "total": 30000,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "anticipo de 2 comederos welfinish",
+   "cantidad": 1,
+   "unitario": 13500,
+   "total": 13500,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "16 bolsas de gestacion (precio incluyendo flete)",
+   "cantidad": 16,
+   "unitario": 730,
+   "total": 11680,
+   "cat": "Concentrado"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "compra material suagrovet",
+   "cantidad": 1,
+   "unitario": 78300,
+   "total": 78300,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "compra de antibioticos",
+   "cantidad": 1,
+   "unitario": 3680,
+   "total": 3680,
+   "cat": "Sanidad"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "puerta para corral",
+   "cantidad": 1,
+   "unitario": 2500,
+   "total": 2500,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "pago de porton",
+   "cantidad": 1,
+   "unitario": 7000,
+   "total": 7000,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "bolsas de crecimiento",
+   "cantidad": 12,
+   "unitario": 900,
+   "total": 10800,
+   "cat": "Concentrado"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "Pago abogada",
+   "cantidad": 1,
+   "unitario": 1000,
+   "total": 1000,
+   "cat": "Legal"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "bolsas concentrado gestacion",
+   "cantidad": 12,
+   "unitario": 750,
+   "total": 9000,
+   "cat": "Concentrado"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": "2026-05-29",
+   "descripcion": "concentrado. desarrollo",
+   "cantidad": 25,
+   "unitario": 740,
+   "total": 18500,
+   "cat": "Concentrado"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "intalacion",
+   "cantidad": 1,
+   "unitario": 800,
+   "total": 800,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "cable instalacion",
+   "cantidad": 1,
+   "unitario": 700,
+   "total": 700,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "antibioticos para el verraco",
+   "cantidad": 1,
+   "unitario": 2080,
+   "total": 2080,
+   "cat": "Animales"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "libras electrodo",
+   "cantidad": 3,
+   "unitario": 60,
+   "total": 180,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "desarrollo alcon",
+   "cantidad": 3,
+   "unitario": 920,
+   "total": 2760,
+   "cat": "Concentrado"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "Cunas de Maternidad y una de Destete",
+   "cantidad": 1,
+   "unitario": 15500,
+   "total": 15500,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "Viaje de Cunas de Maternidad",
+   "cantidad": 1,
+   "unitario": 600,
+   "total": 600,
+   "cat": "Fletes y viajes"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": "2026-06-09",
+   "descripcion": "Concentrado de Nutri com",
+   "cantidad": 20,
+   "unitario": 675,
+   "total": 13500,
+   "cat": "Concentrado"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "viaje",
+   "cantidad": 20,
+   "unitario": 100,
+   "total": 2000,
+   "cat": "Fletes y viajes"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "ciperclor",
+   "cantidad": 1,
+   "unitario": 200,
+   "total": 200,
+   "cat": "Sanidad"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "antibioticos (suagrovet)",
+   "cantidad": 1,
+   "unitario": 8295,
+   "total": 8295,
+   "cat": "Sanidad"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "tuvos pvc media pul",
+   "cantidad": 3,
+   "unitario": 80,
+   "total": 240,
+   "cat": "Infraestructura y equipo"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": "2026-06-26",
+   "descripcion": "Bolsas de Concentrado(Nutri Cerdo)",
+   "cantidad": 20,
+   "unitario": 665,
+   "total": 13300,
+   "cat": "Concentrado"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": "2026-06-26",
+   "descripcion": "Bolsas de concentrado(Nutri Cerdo Engorde)",
+   "cantidad": 5,
+   "unitario": 655,
+   "total": 3275,
+   "cat": "Concentrado"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "viaje",
+   "cantidad": 25,
+   "unitario": 100,
+   "total": 2500,
+   "cat": "Fletes y viajes"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "garrafa de chodine y des. dectoplus (doramectina)",
+   "cantidad": 1,
+   "unitario": 2050,
+   "total": 2050,
+   "cat": "Sanidad"
+  },
+  {
+   "socio": "Erick",
+   "tipo": "Compra con aporte",
+   "fecha": null,
+   "descripcion": "deposito a intergen restante machitos",
+   "cantidad": 1,
+   "unitario": 2500,
+   "total": 2500,
+   "cat": "Animales"
+  }
+ ],
+ "celos": [
+  {
+   "cerda": "2704",
+   "verraco": null,
+   "monta": "2026-09-17",
+   "partoEsperado": "2027-01-09",
+   "destete": null,
+   "proximaMonta": null,
+   "celo2": null
+  },
+  {
+   "cerda": "2804",
+   "verraco": null,
+   "monta": "2026-09-14",
+   "partoEsperado": "2027-01-06",
+   "destete": null,
+   "proximaMonta": null,
+   "celo2": null
+  },
+  {
+   "cerda": "08",
+   "verraco": null,
+   "monta": "2026-10-06",
+   "partoEsperado": "2027-01-28",
+   "destete": null,
+   "proximaMonta": null,
+   "celo2": null
+  },
+  {
+   "cerda": "05",
+   "verraco": null,
+   "monta": "2026-05-22",
+   "partoEsperado": "2026-09-14",
+   "destete": "2026-10-14",
+   "proximaMonta": null,
+   "celo2": null
+  },
+  {
+   "cerda": "04",
+   "verraco": null,
+   "monta": "2026-06-23",
+   "partoEsperado": "2026-10-15",
+   "destete": "2026-11-19",
+   "proximaMonta": null,
+   "celo2": null
+  },
+  {
+   "cerda": "03",
+   "verraco": null,
+   "monta": "2026-07-20",
+   "partoEsperado": "2026-11-11",
+   "destete": null,
+   "proximaMonta": null,
+   "celo2": null
+  },
+  {
+   "cerda": "02",
+   "verraco": null,
+   "monta": "2026-06-24",
+   "partoEsperado": "2026-10-16",
+   "destete": "2026-11-19",
+   "proximaMonta": null,
+   "celo2": null
+  },
+  {
+   "cerda": "01",
+   "verraco": null,
+   "monta": "2026-06-27",
+   "partoEsperado": "2026-10-19",
+   "destete": "2026-11-19",
+   "proximaMonta": null,
+   "celo2": null
+  },
+  {
+   "cerda": "18",
+   "verraco": "Blnco",
+   "monta": "2026-09-26",
+   "partoEsperado": "2027-01-18",
+   "destete": "2026-02-15",
+   "proximaMonta": null,
+   "celo2": null
+  },
+  {
+   "cerda": "09",
+   "verraco": "negro",
+   "monta": "2026-09-25",
+   "partoEsperado": "2027-01-17",
+   "destete": "2026-02-15",
+   "proximaMonta": null,
+   "celo2": null
+  },
+  {
+   "cerda": "L1",
+   "verraco": null,
+   "monta": "2026-10-28",
+   "partoEsperado": "2027-02-19",
+   "destete": null,
+   "proximaMonta": null,
+   "celo2": null
+  },
+  {
+   "cerda": "13",
+   "verraco": "negro",
+   "monta": "2026-09-27",
+   "partoEsperado": "2027-01-19",
+   "destete": null,
+   "proximaMonta": null,
+   "celo2": null
+  },
+  {
+   "cerda": "16",
+   "verraco": null,
+   "monta": "2026-10-27",
+   "partoEsperado": "2027-02-18",
+   "destete": "2026-02-15",
+   "proximaMonta": null,
+   "celo2": null
+  },
+  {
+   "cerda": "12",
+   "verraco": "Blanco",
+   "monta": "2026-10-26",
+   "partoEsperado": "2027-02-17",
+   "destete": null,
+   "proximaMonta": null,
+   "celo2": null
+  },
+  {
+   "cerda": "17",
+   "verraco": null,
+   "monta": "2026-11-08",
+   "partoEsperado": "2027-03-02",
+   "destete": null,
+   "proximaMonta": null,
+   "celo2": null
+  },
+  {
+   "cerda": "L2",
+   "verraco": null,
+   "monta": "2026-11-14",
+   "partoEsperado": "2027-03-08",
+   "destete": null,
+   "proximaMonta": null,
+   "celo2": null
+  }
+ ],
+ "vacunas": [
+  {
+   "fecha": "2026-09-01",
+   "cerda": "09",
+   "vacuna": "Farrow sure",
+   "dosis": "2 ml",
+   "refuerzo": "2026-09-19",
+   "nota": "70 y 100 dias de gestacion"
+  },
+  {
+   "fecha": "2026-09-01",
+   "cerda": "L1",
+   "vacuna": "Farrow sure",
+   "dosis": "2 ml",
+   "refuerzo": "2026-09-19",
+   "nota": null
+  },
+  {
+   "fecha": "2026-09-01",
+   "cerda": "12",
+   "vacuna": "Farrow sure",
+   "dosis": "2 ml",
+   "refuerzo": "2026-09-19",
+   "nota": null
+  },
+  {
+   "fecha": "2026-09-01",
+   "cerda": "13",
+   "vacuna": "Farrow sure",
+   "dosis": "2 ml",
+   "refuerzo": "2026-09-19",
+   "nota": null
+  },
+  {
+   "fecha": "2026-09-01",
+   "cerda": "16",
+   "vacuna": "Farrow sure",
+   "dosis": "2 ml",
+   "refuerzo": "2026-09-19",
+   "nota": null
+  },
+  {
+   "fecha": "2026-09-01",
+   "cerda": "18",
+   "vacuna": "Farrow sure",
+   "dosis": "2 ml",
+   "refuerzo": "2026-09-19",
+   "nota": null
+  },
+  {
+   "fecha": "2026-09-01",
+   "cerda": "17",
+   "vacuna": "Farrow sure",
+   "dosis": "2 ml",
+   "refuerzo": "2026-09-19",
+   "nota": null
+  },
+  {
+   "fecha": "2026-09-01",
+   "cerda": "L2",
+   "vacuna": "Farrow sure",
+   "dosis": "2 ml",
+   "refuerzo": "2026-09-19",
+   "nota": null
+  },
+  {
+   "fecha": "2026-09-19",
+   "cerda": "08",
+   "vacuna": "Farrow sure",
+   "dosis": "2 ml",
+   "refuerzo": "14  dias pos parto",
+   "nota": null
+  },
+  {
+   "fecha": "2026-09-19",
+   "cerda": "05",
+   "vacuna": "Farrow sure",
+   "dosis": "2 ml",
+   "refuerzo": "14  dias pos parto",
+   "nota": null
+  },
+  {
+   "fecha": "2026-09-30",
+   "cerda": "04",
+   "vacuna": "Farrow sure",
+   "dosis": "2 ml",
+   "refuerzo": "2026-11-02",
+   "nota": "100 dias gestacion"
+  },
+  {
+   "fecha": "2026-09-30",
+   "cerda": "02",
+   "vacuna": "Farrow sure",
+   "dosis": "2 ml",
+   "refuerzo": "2026-11-02",
+   "nota": "100 dias gestacion"
+  },
+  {
+   "fecha": "2026-09-30",
+   "cerda": "01",
+   "vacuna": "Farrow sure",
+   "dosis": "2 ml",
+   "refuerzo": "2026-11-02",
+   "nota": "100 dias gestacion"
+  },
+  {
+   "fecha": "2026-10-02",
+   "cerda": "03",
+   "vacuna": "Farrow sure",
+   "dosis": "2 ml",
+   "refuerzo": "14  dias pos parto",
+   "nota": "74 DIAS Gestacion"
+  },
+  {
+   "fecha": null,
+   "cerda": "2704",
+   "vacuna": "Farrow sure",
+   "dosis": "2 ml",
+   "refuerzo": null,
+   "nota": null
+  },
+  {
+   "fecha": null,
+   "cerda": "2804",
+   "vacuna": "Farrow sure",
+   "dosis": "2 ml",
+   "refuerzo": null,
+   "nota": null
+  }
+ ],
+ "partos": [
+  {
+   "cerda": "2804",
+   "fecha": "2026-08-15",
+   "monta": "2026-04-28",
+   "total": 11,
+   "vivos": 11,
+   "muertos": 0,
+   "bajas": 11,
+   "peso": "1.4 kg",
+   "obs": null,
+   "destete": null,
+   "proximaMonta": null
+  },
+  {
+   "cerda": "2704",
+   "fecha": "2026-08-17",
+   "monta": "2026-04-27",
+   "total": 19,
+   "vivos": 14,
+   "muertos": 4,
+   "bajas": 9,
+   "peso": "0.9 kg",
+   "obs": "debiles y bajos de peso",
+   "destete": null,
+   "proximaMonta": null
+  },
+  {
+   "cerda": "08",
+   "fecha": "2026-09-02",
+   "monta": "2026-05-10",
+   "total": 11,
+   "vivos": 11,
+   "muertos": 0,
+   "bajas": 5,
+   "peso": "1.4",
+   "obs": "buen tamaño",
+   "destete": "2026-10-02",
+   "proximaMonta": "2026-10-06"
+  },
+  {
+   "cerda": "05",
+   "fecha": "2026-09-14",
+   "monta": "2026-05-22",
+   "total": 13,
+   "vivos": 13,
+   "muertos": 0,
+   "bajas": 1,
+   "peso": "1.3 kg",
+   "obs": "peso ideal.",
+   "destete": "2026-10-12",
+   "proximaMonta": "2026-10-20"
+  },
+  {
+   "cerda": "04",
+   "fecha": "2026-10-15",
+   "monta": "2026-06-23",
+   "total": 8,
+   "vivos": 8,
+   "muertos": 0,
+   "bajas": null,
+   "peso": "1.5 kg",
+   "obs": null,
+   "destete": "2026-11-17",
+   "proximaMonta": "2026-11-22"
+  },
+  {
+   "cerda": "03",
+   "fecha": "2026-11-11",
+   "monta": "2026-07-20",
+   "total": null,
+   "vivos": null,
+   "muertos": null,
+   "bajas": null,
+   "peso": null,
+   "obs": null,
+   "destete": "2026-11-17",
+   "proximaMonta": "2026-11-22"
+  },
+  {
+   "cerda": "02",
+   "fecha": "2026-10-16",
+   "monta": "2026-06-24",
+   "total": 12,
+   "vivos": 12,
+   "muertos": 0,
+   "bajas": null,
+   "peso": "1.3 kg",
+   "obs": null,
+   "destete": "2026-11-17",
+   "proximaMonta": "2026-11-22"
+  },
+  {
+   "cerda": "01",
+   "fecha": "2026-10-19",
+   "monta": "2026-06-27",
+   "total": 8,
+   "vivos": 6,
+   "muertos": 2,
+   "bajas": 1,
+   "peso": null,
+   "obs": null,
+   "destete": null,
+   "proximaMonta": null
+  }
+ ],
+ "costo": {
+  "items": [
+   {
+    "concepto": "consumo de conc gestacion lb",
+    "total": 5250
+   },
+   {
+    "concepto": "consumo de con.  lactancia lb",
+    "total": 3360
+   },
+   {
+    "concepto": "vitaminas",
+    "total": 150
+   },
+   {
+    "concepto": "vacunas",
+    "total": 200
+   },
+   {
+    "concepto": "desparacitante",
+    "total": 50
+   },
+   {
+    "concepto": "antibioticos",
+    "total": 600
+   },
+   {
+    "concepto": "mano de obra por mes",
+    "total": 3000
+   },
+   {
+    "concepto": "preiniciador lechones",
+    "total": 2600
+   },
+   {
+    "concepto": "vacuna a los lechones micoplasma",
+    "total": 1440
+   }
+  ],
+  "total": 16650,
+  "lechones": 12,
+  "precio": 2300,
+  "ingresos": 27600
+ },
+ "medicamentos": [
+  {
+   "nombre": "FERRICOLL-200",
+   "presentacion": "100 ml",
+   "cantidad": 4,
+   "tipo": "Suplemento",
+   "vence": "2027-07-01"
+  },
+  {
+   "nombre": "COXIZURIL",
+   "presentacion": "250 ml",
+   "cantidad": 3,
+   "tipo": "Anticoxcidia",
+   "vence": "2027-07-01"
+  },
+  {
+   "nombre": "MIAKICK",
+   "presentacion": "250 ml",
+   "cantidad": 2,
+   "tipo": "Energizante",
+   "vence": "2027-01-01"
+  },
+  {
+   "nombre": "SELENIO",
+   "presentacion": "100 ml",
+   "cantidad": 4,
+   "tipo": "Vitamina",
+   "vence": "2027-12-01"
+  },
+  {
+   "nombre": "VIGANTOL",
+   "presentacion": "100 ml",
+   "cantidad": 0,
+   "tipo": "Vitamina",
+   "vence": "2027-03-01"
+  },
+  {
+   "nombre": "FLUNIX",
+   "presentacion": "50 ml",
+   "cantidad": 4,
+   "tipo": "Antiflamatorio",
+   "vence": "2027-08-01"
+  },
+  {
+   "nombre": "DICOLLFEN",
+   "presentacion": "250 ml",
+   "cantidad": 2,
+   "tipo": "Analgesico",
+   "vence": "2027-07-01"
+  },
+  {
+   "nombre": "DECTOMAX",
+   "presentacion": "250 ML",
+   "cantidad": 1,
+   "tipo": "Desparasitante",
+   "vence": "2027-10-01"
+  },
+  {
+   "nombre": "CLOPROSTENOL",
+   "presentacion": "20 ml",
+   "cantidad": 1,
+   "tipo": "Hormona",
+   "vence": "2028-11-01"
+  },
+  {
+   "nombre": "AMOXICOL RT",
+   "presentacion": "100 ML",
+   "cantidad": 2,
+   "tipo": "Antibiotico",
+   "vence": "2027-11-01"
+  },
+  {
+   "nombre": "MINOXEL PLUS",
+   "presentacion": "100 ml",
+   "cantidad": 2,
+   "tipo": "Antibiotico",
+   "vence": "2026-11-01"
+  },
+  {
+   "nombre": "Minoxel LA",
+   "presentacion": "100 ml",
+   "cantidad": 0,
+   "tipo": "Antibiotico",
+   "vence": null
+  },
+  {
+   "nombre": "Apetovit",
+   "presentacion": "100 ml",
+   "cantidad": 1,
+   "tipo": "Estimulante del apetito",
+   "vence": "2028-02-01"
+  },
+  {
+   "nombre": "vacuna contra micoplasma y circuvirus",
+   "presentacion": "100 ml",
+   "cantidad": 1,
+   "tipo": "vacuna",
+   "vence": null
+  }
+ ],
+ "concentrado": [
+  {
+   "tipo": "GESTACION",
+   "bolsas": 10,
+   "compra": "2026-09-19",
+   "vence": "2026-11-02"
+  },
+  {
+   "tipo": "LACTANCIA",
+   "bolsas": 1,
+   "compra": "",
+   "vence": "2027-10-15"
+  },
+  {
+   "tipo": "DESAROLLO",
+   "bolsas": 1,
+   "compra": "2026-09-19",
+   "vence": "2026-11-02"
+  },
+  {
+   "tipo": "ENGORDE",
+   "bolsas": 1,
+   "compra": null,
+   "vence": null
+  },
+  {
+   "tipo": "BIONOVA 1",
+   "bolsas": 1,
+   "compra": null,
+   "vence": "2026-10-20"
+  },
+  {
+   "tipo": "BIONOVA 2",
+   "bolsas": 0,
+   "compra": null,
+   "vence": null
+  },
+  {
+   "tipo": "INICIO",
+   "bolsas": 0,
+   "compra": null,
+   "vence": null
+  }
+ ],
+ "avisos": []
+}
