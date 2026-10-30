@@ -1,10 +1,10 @@
 {
- "generado": "2026-10-30T02:41:10.357Z",
+ "generado": "2026-10-30T23:41:48.408Z",
  "fuente": "OneDrive · Proyecto_Porcino",
  "archivos": [
   {
    "nombre": "Proyecto Porcino.xlsx",
-   "modificado": "2026-10-30T01:13:12Z",
+   "modificado": "2026-10-30T23:39:55Z",
    "por": "Guest Contributor"
   },
   {
@@ -1566,8 +1566,8 @@
   {
    "cerda": "L2",
    "verraco": null,
-   "monta": "2026-11-14",
-   "partoEsperado": "2027-03-08",
+   "monta": "2026-11-19",
+   "partoEsperado": "2027-03-13",
    "destete": null,
    "proximaMonta": null,
    "celo2": null
