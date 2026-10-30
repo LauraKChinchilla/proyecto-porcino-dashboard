@@ -175,6 +175,27 @@
     return out;
   }
 
+
+  // ---------- Control de lechones (inventario por camada) ----------
+  function parseControl(XLSX, wb) {
+    const ws = sheetBy(wb, 'control de lechon', 'lechones'); if (!ws) return [];
+    const rows = aoa(XLSX, ws);
+    const h = findHeader(rows, ['fecha', /entrada/, /muerte/]); if (h < 0) return [];
+    const H = rows[h];
+    const cF = colOf(H, 'fecha'), cC = colOf(H, /cerda|cod/), cCom = colOf(H, /comentario/), cE = colOf(H, /entrada/), cM = colOf(H, /muerte/), cV = colOf(H, /venta/);
+    const out = [];
+    for (let r = h + 1; r < rows.length; r++) {
+      const row = rows[r] || [];
+      const fecha = toISO(row[cF]);
+      if (!fecha) continue;
+      const txt = String(row[cC >= 0 ? cC : cCom] || '');
+      const cerdas = (txt.replace(/cerda|cerd|cod\.?/gi, ' ').match(/[A-Za-z]?\d{1,4}/g) || []).map(code);
+      out.push({ fila: r + 1, fecha, cerdas, comentario: cCom >= 0 && row[cCom] ? String(row[cCom]).trim() : null,
+        vivos: num(row[cE]) || 0, muertes: num(row[cM]) || 0, ventas: num(row[cV]) || 0 });
+    }
+    return out;
+  }
+
   // ---------- Vacunas ----------
   function parseVacunas(XLSX, wb) {
     const ws = sheetBy(wb, 'vacuna'); if (!ws) return [];
@@ -262,12 +283,13 @@
 
   function parseAll(XLSX, books) {
     const warn = [];
-    const out = { libro: [], aportes: [], celos: [], vacunas: [], partos: [], costo: null, medicamentos: [], concentrado: [] };
+    const out = { libro: [], aportes: [], celos: [], vacunas: [], lechones: [], partos: [], costo: null, medicamentos: [], concentrado: [] };
     if (books.proyecto) {
       const l = parseLibro(XLSX, books.proyecto); out.libro = l.rows; warn.push(...l.warn);
       out.aportes = parseAportes(XLSX, books.proyecto) || [];
       out.celos = parseCelos(XLSX, books.proyecto);
       out.vacunas = parseVacunas(XLSX, books.proyecto);
+      out.lechones = parseControl(XLSX, books.proyecto);
     } else warn.push('No se encontró Proyecto Porcino.xlsx');
     if (books.contable) {
       out.partos = parsePartos(XLSX, books.contable);
