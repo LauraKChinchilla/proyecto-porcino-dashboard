@@ -1,5 +1,5 @@
 {
- "generado": "2026-10-30T02:13:52.461Z",
+ "generado": "2026-10-30T02:41:10.357Z",
  "fuente": "OneDrive · Proyecto_Porcino",
  "archivos": [
   {
@@ -1701,6 +1701,75 @@
    "dosis": "2 ml",
    "refuerzo": null,
    "nota": null
+  }
+ ],
+ "lechones": [
+  {
+   "fila": 4,
+   "fecha": "2026-08-19",
+   "cerdas": [
+    "2804",
+    "2704"
+   ],
+   "comentario": "Primeras  2  camadas mortalidad 68% (8 de 25)",
+   "vivos": 25,
+   "muertes": 18,
+   "ventas": 7
+  },
+  {
+   "fila": 5,
+   "fecha": "2026-09-02",
+   "cerdas": [
+    "08"
+   ],
+   "comentario": "11 nacidos vivos",
+   "vivos": 11,
+   "muertes": 6,
+   "ventas": 5
+  },
+  {
+   "fila": 6,
+   "fecha": "2026-09-14",
+   "cerdas": [
+    "05"
+   ],
+   "comentario": "13 nacidos vivos",
+   "vivos": 13,
+   "muertes": 1,
+   "ventas": 6
+  },
+  {
+   "fila": 7,
+   "fecha": "2026-10-15",
+   "cerdas": [
+    "02"
+   ],
+   "comentario": "parto de 10 lechones",
+   "vivos": 10,
+   "muertes": 0,
+   "ventas": 0
+  },
+  {
+   "fila": 8,
+   "fecha": "2026-10-15",
+   "cerdas": [
+    "04"
+   ],
+   "comentario": "parto de 10 lechones",
+   "vivos": 10,
+   "muertes": 0,
+   "ventas": 0
+  },
+  {
+   "fila": 9,
+   "fecha": "2026-10-20",
+   "cerdas": [
+    "01"
+   ],
+   "comentario": "parto de 8 lechones 6 nac vivos y 2 muertos",
+   "vivos": 6,
+   "muertes": 2,
+   "ventas": 0
   }
  ],
  "partos": [
