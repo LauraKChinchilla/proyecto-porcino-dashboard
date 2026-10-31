@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const XLSX = require('xlsx');
-const { parseAll, norm } = require('./parse.js');
+const { parseAll, parseFacil, norm } = require('./parse.js');
 
 const SHARE = (process.env.ONEDRIVE_SHARE_URL || '').trim();
 const OUT = path.join(__dirname, '..', 'data.json');
@@ -22,7 +22,9 @@ async function main() {
   const folder = await res.json();
   const kids = folder.children || [];
   const pick = re => kids.find(k => re.test(norm(k.name)) && /\.xlsx?$/i.test(k.name));
-  const want = { proyecto: pick(/^proyecto porcino/), contable: pick(/sistema.?contable/) };
+  // Desde el 31-oct-2026 la fuente es el Excel sencillo. Si no existiera, se usan los dos Excel anteriores.
+  const facil = pick(/granja.?porcina.?facil/);
+  const want = facil ? { facil } : { proyecto: pick(/^proyecto porcino/), contable: pick(/sistema.?contable/) };
   const books = {}, files = [];
   for (const [key, item] of Object.entries(want)) {
     if (!item) continue;
@@ -31,7 +33,7 @@ async function main() {
     books[key] = XLSX.read(buf, { type: 'buffer', cellDates: true });
     files.push({ nombre: item.name, modificado: item.lastModifiedDateTime, por: item.lastModifiedBy && item.lastModifiedBy.user ? item.lastModifiedBy.user.displayName : null });
   }
-  const data = parseAll(XLSX, books);
+  const data = books.facil ? parseFacil(XLSX, books.facil) : parseAll(XLSX, books);
   const payload = { fuente: 'OneDrive · Proyecto_Porcino', archivos: files, ...data };
   let prev = null;
   try { prev = JSON.parse(fs.readFileSync(OUT, 'utf8')); } catch (e) { /* primera vez */ }

@@ -281,6 +281,130 @@
     return out;
   }
 
+
+  // ================= Excel sencillo: Granja_Porcina_Facil.xlsx =================
+  function tabla(XLSX, wb, nombre, primera) {
+    const ws = sheetBy(wb, nombre); if (!ws) return null;
+    const rows = aoa(XLSX, ws);
+    const h = findHeader(rows, [primera]); if (h < 0) return null;
+    const H = rows[h].map(norm);
+    return { rows, h, col: re => H.findIndex(x => re.test(x)) };
+  }
+  const txt = v => v == null ? '' : String(v).trim();
+  const CAT_E = { 'venta de lechones': 'Ventas', 'venta de cerdos': 'Ventas', 'aporte de socio': 'Aporte de socio', 'saldo inicial': 'Saldo inicial' };
+  function parseFacil(XLSX, wb) {
+    const out = { libro: [], aportes: [], celos: [], vacunas: [], partos: [], lechones: [], medicamentos: [], concentrado: [], costo: null, hato: [], engorde: [], avisos: [] };
+    // Dinero
+    let t = tabla(XLSX, wb, 'dinero', /^fecha/);
+    if (t) {
+      const cF = t.col(/^fecha/), cES = t.col(/entra o sale/), cT = t.col(/^tipo/), cD = t.col(/^descrip/), cM = t.col(/^monto/), cS = t.col(/^socio/), cN = t.col(/^nota/);
+      for (let r = t.h + 1; r < t.rows.length; r++) {
+        const row = t.rows[r] || []; const m = num(row[cM]); if (!m) continue;
+        const ent = /^entra/.test(norm(row[cES]));
+        const tipo = txt(row[cT]);
+        const cat = ent ? (CAT_E[norm(tipo)] || (tipo || 'Otros ingresos')) : (tipo || 'Otro gasto');
+        out.libro.push({ fila: r + 1, fecha: toISO(row[cF]), concepto: txt(row[cD]) || '(sin descripción)', tipo, socio: txt(row[cS]) || null, nota: txt(row[cN]) || null,
+          cantidad: null, precio: null, entrada: ent ? m : 0, salida: ent ? 0 : m, cat });
+      }
+    } else out.avisos.push('No se encontró la hoja Dinero');
+    // Socios
+    t = tabla(XLSX, wb, 'socios', /^fecha/);
+    if (t) {
+      const cF = t.col(/^fecha/), cS = t.col(/^socio/), cT = t.col(/tipo de aporte/), cD = t.col(/^descrip/), cM = t.col(/^monto/);
+      for (let r = t.h + 1; r < t.rows.length; r++) {
+        const row = t.rows[r] || []; const m = num(row[cM]); if (!m || !txt(row[cS])) continue;
+        const tp = norm(row[cT]);
+        const d = txt(row[cD]);
+        out.aportes.push({ socio: /eric/.test(norm(row[cS])) ? 'Erick' : 'Wilian', tipo: /igual/.test(tp) ? 'Igualación' : /efect/.test(tp) ? 'Efectivo' : 'Especie',
+          fecha: toISO(row[cF]), descripcion: d, cantidad: null, unitario: null, total: m, cat: /ajuste/.test(norm(d)) ? 'Ajuste' : catInversion(d) });
+      }
+    }
+    t = tabla(XLSX, wb, 'compras inicio', /^descrip/);
+    if (t) {
+      const cD = t.col(/^descrip/), cQ = t.col(/^cantidad/), cP = t.col(/^precio/), cT = t.col(/^total/);
+      for (let r = t.h + 1; r < t.rows.length; r++) {
+        const row = t.rows[r] || []; const d = txt(row[cD]); const m = num(row[cT]);
+        if (!d || /^total$/.test(norm(d)) || !m) continue;
+        out.aportes.push({ socio: 'Erick', tipo: 'Compra con aporte', fecha: null, descripcion: d, cantidad: num(row[cQ]), unitario: num(row[cP]), total: m, cat: catInversion(d) });
+      }
+    }
+    // Cerdas
+    t = tabla(XLSX, wb, 'cerdas', /^cerda$/);
+    if (t) {
+      const c = t.col;
+      const cA = c(/^cerda$/), cV = c(/^verraco/), cM = c(/fecha de monta/), cP = c(/fecha de parto/), cN = c(/nacidos vivos/), cMu = c(/^muertos/), cVe = c(/^vendidos/), cNo = c(/^nota/);
+      for (let r = t.h + 1; r < t.rows.length; r++) {
+        const row = t.rows[r] || []; const cerda = code(row[cA]); if (!cerda) continue;
+        const monta = toISO(row[cM]), parto = toISO(row[cP]);
+        if (!monta && !parto) continue;
+        const vivos = num(row[cN]), muertos = num(row[cMu]) || 0, vend = num(row[cVe]) || 0;
+        const ver = txt(row[cV]) || null;
+        if (!parto) { out.celos.push({ cerda, verraco: ver, monta, partoEsperado: addDays(monta, 114), destete: null, proximaMonta: null, celo2: null }); continue; }
+        out.partos.push({ cerda, fecha: parto, monta, total: vivos, vivos, muertos: null, bajas: vivos == null ? null : muertos, peso: null, obs: txt(row[cNo]) || null, destete: null, proximaMonta: null });
+        if (vivos != null) out.lechones.push({ fila: r + 1, fecha: parto, cerdas: [cerda], comentario: txt(row[cNo]) || null, vivos, muertes: muertos, ventas: vend });
+      }
+    } else out.avisos.push('No se encontró la hoja Cerdas');
+    // Hato
+    t = tabla(XLSX, wb, 'hato', /^codigo/);
+    if (t) {
+      const c = t.col; const cC = c(/^codigo/), cT = c(/^tipo/), cO = c(/^origen/), cE = c(/fecha de entrada/), cS = c(/^estado/), cX = c(/fecha de salida/), cN = c(/^nota/);
+      for (let r = t.h + 1; r < t.rows.length; r++) {
+        const row = t.rows[r] || []; const k = txt(row[cC]); if (!k) continue;
+        out.hato.push({ codigo: /verraco/.test(norm(row[cT])) ? k : code(k), tipo: txt(row[cT]) || 'Cerda', origen: txt(row[cO]) || null, entrada: toISO(row[cE]),
+          estado: txt(row[cS]) || 'Activa', salida: toISO(row[cX]), nota: txt(row[cN]) || null });
+      }
+    }
+    // Engorde
+    const wsE = sheetBy(wb, 'engorde');
+    if (wsE) {
+      const rows = aoa(XLSX, wsE);
+      const hL = findHeader(rows, ['lote', /^entraron/]);
+      const precios = {};
+      if (hL >= 0) { const H = rows[hL].map(norm); const cL = H.indexOf('lote'), cP = H.findIndex(x => /precio estimado/.test(x));
+        for (let r = hL + 1; r < hL + 10 && r < rows.length; r++) { const row = rows[r] || []; const l = txt(row[cL]); if (/^(total|fecha)/i.test(l)) break; if (l) precios[l] = num(row[cP]); } }
+      const hM = findHeader(rows, ['fecha', 'lote', 'movimiento'], 60);
+      if (hM >= 0) { const H = rows[hM].map(norm); const ci = k => H.findIndex(x => x.startsWith(k));
+        const cF = ci('fecha'), cL = ci('lote'), cMv = ci('movimiento'), cQ = ci('cantidad'), cMo = ci('monto'), cPe = ci('peso'), cN = ci('nota');
+        for (let r = hM + 1; r < rows.length; r++) { const row = rows[r] || []; const l = txt(row[cL]), mv = txt(row[cMv]); if (!l || !mv) continue;
+          out.engorde.push({ fecha: toISO(row[cF]), lote: l, movimiento: mv, cantidad: num(row[cQ]), monto: num(row[cMo]), peso: num(row[cPe]), nota: txt(row[cN]) || null }); } }
+      out.engordePrecios = precios;
+    }
+    // Vacunas
+    t = tabla(XLSX, wb, 'vacunas', /^fecha/);
+    if (t) {
+      const c = t.col; const cF = c(/^fecha/), cA = c(/cerda o lote/), cP = c(/^producto/), cD = c(/^dosis/), cR = c(/refuerzo/), cN = c(/^nota/);
+      for (let r = t.h + 1; r < t.rows.length; r++) {
+        const row = t.rows[r] || []; if (!txt(row[cA]) && !txt(row[cP])) continue;
+        out.vacunas.push({ fecha: toISO(row[cF]), cerda: code(row[cA]) || txt(row[cA]), vacuna: txt(row[cP]), dosis: txt(row[cD]) || null, refuerzo: toISO(row[cR]), nota: txt(row[cN]) || null });
+      }
+    }
+    // Bodega (dos tablas lado a lado)
+    const wsB = sheetBy(wb, 'bodega');
+    if (wsB) {
+      const rows = aoa(XLSX, wsB); const h = findHeader(rows, ['medicina']);
+      if (h >= 0) { const H = rows[h].map(norm);
+        const cM = H.indexOf('medicina'), cT = H.indexOf('tipo'), cQ = H.indexOf('frascos'), cV = H.indexOf('vence');
+        const cC = H.indexOf('concentrado'), cB = H.indexOf('bolsas'), cV2 = H.indexOf('vence', cC);
+        for (let r = h + 1; r < rows.length; r++) { const row = rows[r] || [];
+          if (txt(row[cM])) out.medicamentos.push({ nombre: txt(row[cM]), presentacion: null, cantidad: num(row[cQ]), tipo: txt(row[cT]) || null, vence: toISO(row[cV]) });
+          if (cC >= 0 && txt(row[cC])) out.concentrado.push({ tipo: txt(row[cC]), bolsas: num(row[cB]), compra: null, vence: toISO(row[cV2]) }); } }
+    }
+    // Costo y precio
+    const wsC = sheetBy(wb, 'costo');
+    let precio = null;
+    const wsR = sheetBy(wb, 'resumen');
+    if (wsR) { const rows = aoa(XLSX, wsR); for (const row of rows.slice(0, 8)) { const i = (row || []).findIndex(x => /precio de venta por lechon/.test(norm(x))); if (i >= 0) { precio = num(row[i + 1]); break; } } }
+    if (wsC) {
+      const rows = aoa(XLSX, wsC); const h = findHeader(rows, ['concepto']); const items = []; let lech = null;
+      if (h >= 0) for (let r = h + 1; r < rows.length; r++) { const row = rows[r] || []; const l = txt(row[0]); const v = num(row[1]);
+        if (!l) continue; if (/costo total/.test(norm(l))) break; if (v) items.push({ concepto: l, total: v }); }
+      for (const row of rows) { if (/lechones por camada/.test(norm((row || [])[0]))) lech = num(row[1]); }
+      const total = items.reduce((a, b) => a + b.total, 0);
+      out.costo = { items, total, lechones: lech || 12, precio: precio || 2300, ingresos: null };
+    } else out.costo = { items: [], total: 0, lechones: 12, precio: precio || 2300, ingresos: null };
+    return out;
+  }
+
   function parseAll(XLSX, books) {
     const warn = [];
     const out = { libro: [], aportes: [], celos: [], vacunas: [], lechones: [], partos: [], costo: null, medicamentos: [], concentrado: [] };
@@ -307,6 +431,6 @@
     return out;
   }
 
-  const api = { parseAll, toISO, num, code, norm };
+  const api = { parseAll, parseFacil, toISO, num, code, norm };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.PorcinoParse = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
