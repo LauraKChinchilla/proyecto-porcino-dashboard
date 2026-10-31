@@ -232,7 +232,7 @@
     // Notas automáticas
     const notas = [];
     const sinFecha = D.libro.filter(r => !r.fecha).length;
-    if (sinFecha) notas.push(`${sinFecha} de ${D.libro.length} movimientos del Libro Diario no tienen fecha; por eso el gasto se calcula como promedio del periodo y no mes a mes.`);
+    if (sinFecha) notas.push(`${sinFecha} de ${D.libro.length} movimientos de la hoja Dinero no tienen fecha; por eso el gasto se calcula como promedio del periodo y no mes a mes.`);
     const sinDet = D.libro.filter(r => r.cat === 'Sin detalle' || /falta escribir/i.test(r.nota || ''));
     if (sinDet.length) notas.push(`${sinDet.length} gasto(s) sin descripción (${sinDet.map(r => L(r.salida)).join(', ')}).`);
     if (C.igualSin) notas.push(`Hay ${L(C.igualSin)} de ingreso de capital sin socio identificado.`);
