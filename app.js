@@ -46,7 +46,9 @@
     const soc = { Wilian: { especie: 0, efectivo: 0, igual: 0 }, Erick: { especie: 0, efectivo: 0, igual: 0 } };
     D.aportes.forEach(a => { if (!soc[a.socio]) return; if (a.tipo === 'Especie') soc[a.socio].especie += a.total; if (a.tipo === 'Efectivo') soc[a.socio].efectivo += a.total; });
     let igualSin = 0;
-    libro.filter(r => r.cat === 'Aporte de socio').forEach(r => {
+    const igualEnSocios = D.aportes.some(a => a.tipo === 'Igualación');
+    D.aportes.forEach(a => { if (a.tipo === 'Igualación' && soc[a.socio]) soc[a.socio].igual += a.total; });
+    if (!igualEnSocios) libro.filter(r => r.cat === 'Aporte de socio').forEach(r => {
       const t = r.concepto.toLowerCase();
       if (/eric/.test(t)) soc.Erick.igual += r.entrada; else if (/wili/.test(t)) soc.Wilian.igual += r.entrada; else igualSin += r.entrada;
     });
@@ -87,11 +89,28 @@
       if (v) { mortC = m / v; vivC = v; bajC = m; }
     }
 
+    // hato y engorde (Excel sencillo)
+    const hato = (D.hato || []).map(h => {
+      const ps = partos.filter(p => p.cerda === h.codigo && p.fecha <= T);
+      const ult = ps.length ? ps[ps.length - 1] : null;
+      const pend = ev.filter(e => e.cerda === h.codigo && e.parto > T && e.tipo !== 'real')[0];
+      return { ...h, partos: ps.length, vivos: ps.reduce((a, p) => a + (p.vivos || 0), 0), ultimo: ult ? ult.fecha : null, proximo: pend ? pend.parto : null };
+    });
+    const lotesE = {};
+    (D.engorde || []).forEach(m => {
+      const l = lotesE[m.lote] = lotesE[m.lote] || { lote: m.lote, entraron: 0, vendidos: 0, muertos: 0, ventasL: 0, sinFecha: 0, precio: (D.engordePrecios || {})[m.lote] || null };
+      const q = m.cantidad || 0, mv = (m.movimiento || '').toLowerCase();
+      if (/compra|paso/.test(mv)) l.entraron += q; else if (/venta/.test(mv)) { l.vendidos += q; l.ventasL += m.monto || 0; } else if (/muerte/.test(mv)) l.muertos += q;
+      if (!m.fecha) l.sinFecha++;
+    });
+    const engorde = Object.values(lotesE).map(l => ({ ...l, quedan: l.entraron - l.vendidos - l.muertos }));
+    const engQuedan = engorde.reduce((a, l) => a + l.quedan, 0), engValor = engorde.reduce((a, l) => a + l.quedan * (l.precio || 0), 0);
+
     // inventario vacunas próximas
     const refuerzos = D.vacunas.filter(v => /^\d{4}-/.test(v.refuerzo || '') && v.refuerzo >= addDays(T, -3)).sort((a, b) => a.refuerzo < b.refuerzo ? -1 : 1);
 
     return { T, Y, inicio, dias, meses, ent, sal, saldo: ent - sal, ventas, gastoMes: sal / meses, ventaMes: ventas / meses, soc, igualSin,
-      partos, reales, conDatos, prom, ev, refuerzos, lotes, listos, lactando,
+      partos, reales, conDatos, prom, ev, refuerzos, lotes, listos, lactando, hato, engorde, engQuedan, engValor,
       mort: mortC != null ? mortC : (vivDest ? bajDest / vivDest : 0), vivDest: mortC != null ? vivC : vivDest, bajDest: mortC != null ? bajC : bajDest,
       mortFuente: mortC != null ? 'Control de lechones' : 'Registro de partos' };
   }
@@ -120,6 +139,7 @@
       ['Resultado operativo', L(C.ventas - C.sal), `Ventas − gastos en ${C.dias} días`, C.ventas - C.sal < 0 ? ['bad', '▼ Déficit'] : ['good', '▲ Superávit']],
       ['Cobertura de caja', def > 0 ? dec(C.saldo / def) + ' meses' : 'Sin déficit', 'Al ritmo actual de gasto y venta', def > 0 && C.saldo / def < 2 ? ['warn', '! Ajustado'] : null],
       ['Listos para vender', `${C.listos} lechones`, `≈ ${L(C.listos * precio)} a ${L(precio)} · ${C.lactando} más en lactancia`, C.listos ? ['good', '● Destetados'] : null],
+      ...(C.engorde.length ? [['Cerdos de engorde', `${C.engQuedan} en granja`, C.engValor ? `≈ ${L(C.engValor)} a precio estimado` : 'Sin precio estimado', ['warn', '! Confirmar conteo']]] : []),
       ['Mortalidad de lechones', pct(C.mort), `${C.bajDest} muertes de ${C.vivDest} vivos (camadas destetadas)`, C.mort > 0.2 ? ['bad', '▲ Alta'] : ['good', '✓ Aceptable']],
       ['Margen por lechón', costoU != null ? L(precio - costoU) : '—', costoU != null ? `Costo ${L(costoU)} · precio ${L(precio)}` : 'Sin hoja de costo', costoU != null && precio > costoU ? ['good', '✓ Positivo'] : null],
     ];
@@ -174,6 +194,19 @@
       `<tr class="tot"><td>Total</td><td></td><td></td><td class="num">${C.listos + C.lactando}</td><td>${C.listos} listos · ${C.lactando} lactando</td></tr></tbody>`;
     $('loteCallout').innerHTML = C.listos ? `Hay <b>${C.listos} lechones destetados sin vender</b>: a ${L(precio)} son <b>${L(C.listos * precio)}</b>. La proyección los cuenta como venta en el próximo mes.` : 'No hay lechones destetados pendientes de venta según la hoja Control de lechones.';
 
+    // Animales: hato y engorde
+    if ($('hatoTbl')) {
+      const act = C.hato.filter(h => /^activ/i.test(h.estado));
+      $('hatoCap').textContent = C.hato.length ? `${act.filter(h => !/verraco/i.test(h.tipo)).length} cerdas y ${act.filter(h => /verraco/i.test(h.tipo)).length} verraco(s) activos · ${C.hato.length - act.length} vendidos, muertos o descartados` : 'Sin registros en la hoja Hato';
+      $('hatoTbl').innerHTML = '<thead><tr><th>Código</th><th>Tipo</th><th>Estado</th><th class="num">Partos</th><th class="num">Lechones vivos</th><th>Último parto</th><th>Próximo parto</th></tr></thead><tbody>' +
+        C.hato.map(h => `<tr><td><b>${esc(h.codigo)}</b></td><td class="muted">${esc(h.tipo)}</td><td>${/^activ/i.test(h.estado) ? '<span class="badge good">' + esc(h.estado) + '</span>' : '<span class="badge bad">' + esc(h.estado) + (h.salida ? ' · ' + fmtDs(h.salida) : '') + '</span>'}</td><td class="num">${/verraco/i.test(h.tipo) ? '' : h.partos}</td><td class="num">${/verraco/i.test(h.tipo) ? '' : h.vivos}</td><td>${h.ultimo ? fmtDs(h.ultimo) : ''}</td><td>${h.proximo ? fmtDs(h.proximo) : ''}</td></tr>`).join('') + '</tbody>';
+      $('engTbl').innerHTML = C.engorde.length ? '<thead><tr><th>Lote</th><th class="num">Entraron</th><th class="num">Vendidos</th><th class="num">Muertos</th><th class="num">Quedan</th><th class="num">Valor estimado</th></tr></thead><tbody>' +
+        C.engorde.map(l => `<tr><td>${esc(l.lote)}</td><td class="num">${l.entraron}</td><td class="num">${l.vendidos}</td><td class="num">${l.muertos}</td><td class="num"><b>${l.quedan}</b></td><td class="num">${l.precio ? L(l.quedan * l.precio) : '—'}</td></tr>`).join('') +
+        `<tr class="tot"><td>Total</td><td></td><td></td><td></td><td class="num">${C.engQuedan}</td><td class="num">${C.engValor ? L(C.engValor) : '—'}</td></tr></tbody>` : '<tbody><tr><td class="muted">Sin movimientos en la hoja Engorde.</td></tr></tbody>';
+      const sinMuertes = C.engorde.some(l => !l.muertos);
+      $('engCallout').innerHTML = C.engorde.length ? `Según la hoja Engorde quedan <b>${C.engQuedan} cerdos</b>${C.engValor ? `, unos <b>${L(C.engValor)}</b> al precio estimado` : ''}. ${sinMuertes ? 'Todavía no hay muertes anotadas, así que este número puede estar alto: confírmenlo con un conteo. ' : ''}No se incluyen en la proyección de caja porque no hay fecha de venta.` : '';
+    }
+
     // Calendario
     const desde = monthKey(addDays(C.T, -100)), hasta = monthKey(addDays(C.T, 185));
     const meses = []; for (let k = desde; k <= hasta; k = nextMonth(k)) meses.push(k);
@@ -200,13 +233,16 @@
     const notas = [];
     const sinFecha = D.libro.filter(r => !r.fecha).length;
     if (sinFecha) notas.push(`${sinFecha} de ${D.libro.length} movimientos del Libro Diario no tienen fecha; por eso el gasto se calcula como promedio del periodo y no mes a mes.`);
-    const sinDet = D.libro.filter(r => r.cat === 'Sin detalle');
+    const sinDet = D.libro.filter(r => r.cat === 'Sin detalle' || /falta escribir/i.test(r.nota || ''));
     if (sinDet.length) notas.push(`${sinDet.length} gasto(s) sin descripción (${sinDet.map(r => L(r.salida)).join(', ')}).`);
     if (C.igualSin) notas.push(`Hay ${L(C.igualSin)} de ingreso de capital sin socio identificado.`);
     C.reales.filter(p => p.vivos == null).forEach(p => notas.push(`La cerda ${p.cerda} parió el ${fmtD(p.fecha)} pero no tiene nacidos ni vivos registrados.`));
     C.ev.filter(e => e.tipo === 'sin registrar').forEach(e => notas.push(`La cerda ${e.cerda} debía parir el ${fmtD(e.parto)} y no aparece en el registro de partos.`));
     C.partos.filter(p => p.fecha <= C.T && p.vivos != null && p.bajas == null && diffDays(p.fecha, C.T) > 7).forEach(p => notas.push(`Cerda ${p.cerda}: no se han anotado bajas desde el parto (${fmtD(p.fecha)}). Si no hubo, escribir 0.`));
     C.lotes.forEach(l => { if (l.reg && l.reg.vivos != null && l.cerdas.length === 1 && l.reg.vivos !== l.vivos) notas.push(`Cerda ${l.nombre}: ${l.vivos} vivos en “Control de lechones” pero ${l.reg.vivos} en “Registro de parto”. Se usa Control de lechones para el inventario.`); });
+    const porConf = C.hato.filter(h => /confirmar/i.test(h.origen || ''));
+    if (porConf.length) notas.push(`Hato: falta el origen de ${porConf.map(h => h.codigo).join(', ')}.`);
+    C.engorde.filter(l => l.sinFecha).forEach(l => notas.push(`Engorde, ${l.lote}: ${l.sinFecha} movimiento(s) sin fecha.`));
     if (Math.abs(dif) >= 1) notas.push(`Los aportes de los socios no están igualados: diferencia de ${L(Math.abs(dif))}.`);
     (D.avisos || []).forEach(a => notas.push(a));
     $('notasAuto').innerHTML = notas.length ? notas.map(n => `<li>${esc(n)}</li>`).join('') : '<li>Sin observaciones.</li>';
@@ -245,7 +281,7 @@
     const tot = rows.reduce((a, r) => a + r.ing, 0), totG = rows.reduce((a, r) => a + r.g, 0);
     const low = rows.reduce((a, r) => r.caja < a.caja ? r : a, rows[0]);
     $('projCallout').innerHTML = (neg.length ? `⚠ Con estos supuestos la caja <b>queda en negativo en ${neg.map(r => r.mes).join(', ')}</b>; lo más bajo es ${low.mes} (${L(low.caja)}). Hay que cubrir ese hueco con aportes, venta de cerdos de engorde o recorte de gasto. ` : '✓ Con estos supuestos la caja <b>no baja de cero</b> en los seis meses. ') +
-      (C.listos ? `${monthLabel(nextMonth(monthKey(C.T)))} incluye los ${C.listos} lechones ya destetados. ` : '') + `En seis meses entrarían <b>${L(tot)}</b> por lechones contra <b>${L(totG)}</b> de gasto; caja proyectada al final: <b>${L(fin.caja)}</b>. Solo cuenta montas y partos que ya están en los Excel.`;
+      (C.listos ? `${monthLabel(nextMonth(monthKey(C.T)))} incluye los ${C.listos} lechones ya destetados. ` : '') + (C.engQuedan ? `No incluye los ${C.engQuedan} cerdos de engorde. ` : '') + `En seis meses entrarían <b>${L(tot)}</b> por lechones contra <b>${L(totG)}</b> de gasto; caja proyectada al final: <b>${L(fin.caja)}</b>. Solo cuenta montas y partos que ya están en los Excel.`;
   }
 
   function draw(rows) {

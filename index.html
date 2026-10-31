@@ -134,7 +134,7 @@ footer{color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padd
 <header class="top">
   <div class="eyebrow">Proyecto Porcino · Socios Wilian &amp; Erick</div>
   <h1>Dashboard financiero y productivo de la granja</h1>
-  <p class="sub">Se alimenta directamente de los Excel de la carpeta Proyecto_Porcino en OneDrive (Proyecto Porcino y Sistema Contable). Cuando alguien edita esos archivos, esta página se actualiza sola en pocos minutos.</p>
+  <p class="sub">Se alimenta del Excel <b>Granja_Porcina_Facil.xlsx</b> de la carpeta Proyecto_Porcino en OneDrive. Cuando alguien lo edita, esta página se actualiza sola en pocos minutos.</p>
   <div class="period" id="periodo">Cargando datos…</div>
   <div class="fresh">
     <div class="card"><div class="lbl"><span class="dot live" id="liveDot"></span><span id="liveTxt">En vivo</span> · Última lectura de los Excel</div><div class="v" id="fRead">…</div></div>
@@ -145,32 +145,32 @@ footer{color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padd
 <div class="err" id="err" hidden>No se pudieron cargar los datos. Revisa tu conexión; la página reintenta cada minuto.</div>
 
 <nav class="tabs">
-  <a href="#kpis">KPIs</a><a href="#flujo">Entradas y salidas</a><a href="#socios">Aportes de socios</a><a href="#produccion">Producción</a><a href="#lechones">Lechones en granja</a><a href="#calendario">Calendario de partos</a><a href="#proyeccion">Proyección</a><a href="#inventario">Inventario y sanidad</a><a href="#notas">Notas</a>
+  <a href="#kpis">KPIs</a><a href="#flujo">Entradas y salidas</a><a href="#socios">Aportes de socios</a><a href="#produccion">Producción</a><a href="#lechones">Lechones en granja</a><a href="#animales">Hato y engorde</a><a href="#calendario">Calendario de partos</a><a href="#proyeccion">Proyección</a><a href="#inventario">Inventario y sanidad</a><a href="#notas">Notas</a>
 </nav>
 
 <section id="kpis"><div class="sec-head"><div><h2>Indicadores clave</h2><p>Lo esencial del periodo en una vista.</p></div></div><div class="grid kpis" id="kpiGrid"></div></section>
 
 <section id="flujo">
-  <div class="sec-head"><div><h2>Entradas y salidas</h2><p>Hoja “Libro Diario”. El periodo va desde la primera fecha del libro hasta ayer; el gasto mensual es el promedio de ese periodo.</p></div></div>
+  <div class="sec-head"><div><h2>Entradas y salidas</h2><p>Hoja “Dinero”. El periodo va desde la primera fecha registrada hasta ayer; el gasto mensual es el promedio de ese periodo.</p></div></div>
   <div class="grid two">
     <div class="card"><h3>De dónde vino el dinero</h3><p class="cap">Entradas totales: <span id="entTot"></span></p><div id="entBars"></div></div>
     <div class="card"><h3>En qué se gastó</h3><p class="cap">Salidas totales: <span id="salTot"></span> · agrupadas por tipo</p><div id="salBars"></div></div>
   </div>
-  <div class="card" style="margin-top:14px"><h3>Detalle de movimientos</h3><p class="cap">Todos los registros del Libro Diario con la categoría asignada. “Fila” es la fila del Excel.</p>
+  <div class="card" style="margin-top:14px"><h3>Detalle de movimientos</h3><p class="cap">Todos los movimientos de la hoja Dinero. “Fila” es la fila del Excel.</p>
     <div class="tbl-wrap" style="max-height:400px;overflow:auto"><table id="libro"></table></div></div>
 </section>
 
 <section id="socios">
-  <div class="sec-head"><div><h2>Aportes de los socios</h2><p>Hoja “Aporte Inicial” más los ingresos de capital del Libro Diario.</p></div></div>
+  <div class="sec-head"><div><h2>Aportes de los socios</h2><p>Hoja “Socios”.</p></div></div>
   <div class="grid two">
     <div class="card"><h3>Capital aportado por socio</h3><p class="cap">Especie + efectivo + igualación</p><div class="split" id="socioSplit"></div><div class="legend" id="socioLegend"></div><div class="tbl-wrap" style="margin-top:14px"><table id="socioTbl"></table></div></div>
-    <div class="card"><h3>En qué se convirtió la inversión inicial</h3><p class="cap">Lo aportado en especie por Wilian y lo comprado con el efectivo de Erick</p><div id="invBars"></div>
+    <div class="card"><h3>En qué se convirtió la inversión inicial</h3><p class="cap">Lo aportado en especie por Wilian y lo comprado con el efectivo de Erick (hoja Compras inicio)</p><div id="invBars"></div>
       <div class="legend" style="margin-top:10px"><span><i style="background:var(--s1)"></i>Wilian</span><span><i style="background:var(--s2)"></i>Erick</span></div></div>
   </div>
 </section>
 
 <section id="produccion">
-  <div class="sec-head"><div><h2>Producción</h2><p>Hoja “Registro de parto de cerdas” y “costo de lechones” (Sistema Contable).</p></div></div>
+  <div class="sec-head"><div><h2>Producción</h2><p>Hojas “Cerdas” y “Costo lechón”.</p></div></div>
   <div class="grid two">
     <div class="card"><h3>Partos registrados</h3><p class="cap">Lechones que sobreviven, bajas y nacidos muertos por camada</p><div id="partoBars"></div>
       <div class="legend" style="margin-top:10px"><span><i style="background:var(--s3)"></i>Sobreviven</span><span><i style="background:var(--s2)"></i>Bajas</span><span><i style="background:var(--muted)"></i>Nacidos muertos</span></div></div>
@@ -179,7 +179,7 @@ footer{color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padd
 </section>
 
 <section id="lechones">
-  <div class="sec-head"><div><h2>Lechones en la granja</h2><p>Hoja “Control de lechones”: vivos, muertes y ventas por camada. Los destetados que siguen en la granja están listos para vender.</p></div></div>
+  <div class="sec-head"><div><h2>Lechones en la granja</h2><p>Hoja “Cerdas”: nacidos vivos, muertos y vendidos por camada. Los destetados que siguen en la granja están listos para vender.</p></div></div>
   <div class="grid two">
     <div class="card"><h3>Qué pasó con cada camada</h3><p class="cap">Vendidos, muertos y los que siguen en la granja</p><div id="loteBars"></div>
       <div class="legend" style="margin-top:10px"><span><i style="background:var(--s1)"></i>Vendidos</span><span><i style="background:var(--s2)"></i>Muertes</span><span><i style="background:var(--s3)"></i>Listos para vender</span><span><i style="background:var(--s4)"></i>En lactancia</span></div></div>
@@ -187,8 +187,16 @@ footer{color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padd
   </div>
 </section>
 
+<section id="animales">
+  <div class="sec-head"><div><h2>Hato y engorde</h2><p>Hojas “Hato” (cerdas y verracos) y “Engorde” (cerdos grandes por lote).</p></div></div>
+  <div class="grid two">
+    <div class="card"><h3>Cerdas y verracos</h3><p class="cap" id="hatoCap"></p><div class="tbl-wrap" style="max-height:420px;overflow:auto"><table id="hatoTbl"></table></div></div>
+    <div class="card"><h3>Cerdos de engorde</h3><p class="cap">Entradas, ventas y muertes por lote</p><div class="tbl-wrap"><table id="engTbl"></table></div><div class="callout" style="margin-top:14px" id="engCallout"></div></div>
+  </div>
+</section>
+
 <section id="calendario">
-  <div class="sec-head"><div><h2>Calendario de partos</h2><p>Partos reales del registro y esperados según la hoja de celos (monta + 114 días) y las próximas montas.</p></div></div>
+  <div class="sec-head"><div><h2>Calendario de partos</h2><p>Hoja “Cerdas”: partos reales y esperados (monta + 114 días).</p></div></div>
   <div class="card"><div class="tl" id="timeline"></div>
     <div class="legend" style="margin-top:12px"><span><i style="background:color-mix(in oklab,var(--s3) 35%,transparent)"></i>Ya parió</span><span><i style="background:var(--surface-2);border:1px solid var(--line)"></i>Esperado</span><span><i style="border:1px dashed var(--muted)"></i>Planificado</span><span><i style="border:1px solid var(--warn)"></i>Pasó la fecha y no está registrado</span></div></div>
 </section>
@@ -209,7 +217,7 @@ footer{color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padd
 </section>
 
 <section id="inventario">
-  <div class="sec-head"><div><h2>Inventario y sanidad</h2><p>Medicamentos y concentrado (Sistema Contable) y refuerzos de vacunas (Proyecto Porcino).</p></div></div>
+  <div class="sec-head"><div><h2>Inventario y sanidad</h2><p>Hojas “Bodega” y “Vacunas”.</p></div></div>
   <div class="grid three">
     <div class="card" style="grid-column:1/-1"><h3>Medicamentos</h3><p class="cap">Marca los que vencen en menos de 90 días</p><div class="tbl-wrap"><table id="medTbl"></table></div></div>
     <div class="card"><h3>Concentrado en bodega</h3><p class="cap">Bolsas disponibles</p><div class="tbl-wrap"><table id="concTbl"></table></div></div>
@@ -224,15 +232,15 @@ footer{color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padd
     <div class="card"><h3>Cómo se calcula</h3><ul class="notes">
       <li>La página lee los Excel de OneDrive cada 2 minutos y se refresca sola cada minuto, así que un cambio en los Excel aparece aquí en unos 3–5 minutos.</li>
       <li>Gasto mensual = salidas del Libro Diario ÷ meses entre la primera fecha y ayer. Incluye compras de concentrado.</li>
-      <li>Mortalidad = muertes ÷ nacidos vivos, solo en camadas que ya pasaron el destete (de Control de lechones; si está vacía, del Registro de parto).</li>
-      <li>Lechones en granja = vivos − muertes − ventas (hoja Control de lechones). Listos para vender = camadas que ya pasaron el destete. A los que siguen lactando se les aplica la mortalidad solo por los días que les faltan para el destete.</li>
-      <li>No se usan las hojas desactualizadas: “Gastos Generales” ni “Consumo de concentrado”.</li>
+      <li>Mortalidad = muertos ÷ nacidos vivos, solo en camadas que ya pasaron el destete.</li>
+      <li>Lechones en granja = nacidos vivos − muertos − vendidos (hoja Cerdas). Listos para vender = camadas que ya pasaron el destete. A los que siguen lactando se les aplica la mortalidad solo por los días que les faltan para el destete.</li>
+      <li>Los Excel anteriores (Proyecto Porcino y Sistema Contable) ya no se leen; todo sale de Granja_Porcina_Facil.xlsx.</li>
     </ul></div>
   </div>
 </section>
-<footer>Fuente: carpeta OneDrive “Proyecto_Porcino” · Montos en lempiras (L)</footer>
+<footer>Fuente: Granja_Porcina_Facil.xlsx en la carpeta OneDrive “Proyecto_Porcino” · Montos en lempiras (L)</footer>
 </div>
 <button class="toggle" id="themeBtn" type="button">◐ Tema</button>
-<script src="app.js?v=4"></script>
+<script src="app.js?v=5"></script>
 </body>
 </html>
