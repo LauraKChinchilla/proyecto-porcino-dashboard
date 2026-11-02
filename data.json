@@ -1,10 +1,10 @@
 {
- "generado": "2026-11-02T20:25:37.461Z",
+ "generado": "2026-11-02T20:27:40.790Z",
  "fuente": "OneDrive · Proyecto_Porcino",
  "archivos": [
   {
    "nombre": "Granja_Porcina_Facil.xlsx",
-   "modificado": "2026-11-02T20:23:10Z",
+   "modificado": "2026-11-02T20:27:19Z",
    "por": "Guest Contributor"
   }
  ],
@@ -366,7 +366,7 @@
    "concepto": "Compra",
    "tipo": "Otro gasto",
    "socio": null,
-   "nota": "Falta escribir qué se compró",
+   "nota": "vacuna farrosure y 10 bebederos cerdos",
    "cantidad": null,
    "precio": null,
    "entrada": 0,
