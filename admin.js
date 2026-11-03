@@ -63,7 +63,9 @@
 
   /* ---------- arranque ---------- */
   async function init() {
-    try { const r = await fetch('admin/config.json?t=' + Date.now(), { cache: 'no-store' }); if (r.ok) CONFIG = await r.json(); } catch (e) { }
+    // Primero directo de GitHub (siempre al día); si falla, la copia publicada en Pages (tarda 1–2 min en actualizarse).
+    try { const r = await fetch(`${API}/contents/admin/config.json?t=${Date.now()}`, { cache: 'no-store', headers: { Accept: 'application/vnd.github.raw+json' } }); if (r.ok) CONFIG = await r.json(); } catch (e) { }
+    if (!CONFIG) { try { const r = await fetch('admin/config.json?t=' + Date.now(), { cache: 'no-store' }); if (r.ok) CONFIG = await r.json(); } catch (e) { } }
     if (!CONFIG) { $('vSetup').hidden = false; return; }
     const guardada = store.get('granja_pass');
     if (guardada) { try { const r = await entrar(guardada); TOKEN = r.token; USER = r.user; return abrir(); } catch (e) { store.del('granja_pass'); } }
