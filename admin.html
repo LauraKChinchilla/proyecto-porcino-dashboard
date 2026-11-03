@@ -171,9 +171,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid color-mix(in oklab,var
   <div class="eyebrow"><a href="./" style="color:inherit;text-decoration:none">← Volver al dashboard</a></div>
   <h1>Registrar datos</h1>
   <p class="sub">Lo que guardes aquí se pasa solo al Excel <b>Granja_Porcina_Facil.xlsx</b> y al dashboard en 1–3 minutos.</p>
-  <div class="who" id="whoBox" hidden>Registra:
-    <select id="quien"><option>Laura</option><option>Wilian</option><option>Portillo</option><option value="__otro">Otra persona…</option></select>
-    <input id="quienOtro" placeholder="Nombre" hidden style="max-width:180px">
+  <div class="who" id="whoBox" hidden>Registrando como <b id="usuario" style="color:var(--text);font-size:15px"></b>
     <button class="btn sec" id="salir" type="button" style="min-height:34px;padding:6px 12px;font-size:13px">Cerrar sesión</button>
   </div>
 </header>
@@ -182,7 +180,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid color-mix(in oklab,var
 <section id="vLogin" class="lock" hidden>
   <div class="card">
     <h3>Entrar</h3>
-    <p class="cap">Escribe la contraseña de la granja.</p>
+    <p class="cap">Escribe tu contraseña. Cada persona tiene la suya.</p>
     <form id="fLogin">
       <label class="f">Contraseña<input type="password" id="pass" autocomplete="current-password" required></label>
       <label class="check" style="margin:10px 0 14px"><input type="checkbox" id="recordar"> Recordar en este dispositivo</label>
@@ -197,7 +195,8 @@ input:focus,select:focus,textarea:focus{outline:2px solid color-mix(in oklab,var
     <h3>Configuración inicial (una sola vez)</h3>
     <p class="cap">Pega el token de GitHub y elige la contraseña que usarán todos para registrar datos. El token se guarda cifrado con esa contraseña; sin ella nadie puede usarlo.</p>
     <form id="fSetup">
-      <label class="f">Token de GitHub<input type="password" id="sToken" autocomplete="off" required placeholder="github_pat_…"></label>
+      <label class="f">Tu nombre<input id="sNombre" required placeholder="Ej.: Laura"></label>
+      <label class="f" style="margin-top:12px">Token de GitHub<input type="password" id="sToken" autocomplete="off" required placeholder="github_pat_…"></label>
       <div class="row" style="margin-top:12px">
         <label class="f">Contraseña nueva <small>mínimo 10 caracteres</small><input type="password" id="sPass" minlength="10" autocomplete="new-password" required></label>
         <label class="f">Repite la contraseña<input type="password" id="sPass2" minlength="10" autocomplete="new-password" required></label>
@@ -400,6 +399,32 @@ input:focus,select:focus,textarea:focus{outline:2px solid color-mix(in oklab,var
     </div>
   </div>
 
+  <section style="margin-top:28px" id="vUsuarios" hidden>
+    <div class="card">
+      <h3>Usuarios</h3><p class="cap">Solo tú ves esta sección. Cada usuario entra con su propia contraseña y sus registros quedan con su nombre.</p>
+      <div class="list" id="listaUsuarios"></div>
+      <form id="fNuevoUsuario" style="margin-top:16px">
+        <div class="row">
+          <label class="f">Nombre<input name="nombre" required placeholder="Ej.: Wilian"></label>
+          <label class="f">Contraseña <small>mínimo 8 caracteres</small><input type="password" name="pass" minlength="8" autocomplete="new-password" required></label>
+          <label class="f">Repite la contraseña<input type="password" name="pass2" minlength="8" autocomplete="new-password" required></label>
+        </div>
+        <label class="check" style="margin-bottom:12px"><input type="checkbox" name="admin"> Puede administrar usuarios</label>
+        <div class="actions"><button class="btn" type="submit">Agregar usuario</button></div>
+      </form>
+    </div>
+  </section>
+  <section style="margin-top:20px">
+    <details class="card"><summary style="cursor:pointer;font-weight:600">Cambiar mi contraseña</summary>
+      <form id="fMiPass" style="margin-top:12px">
+        <div class="row">
+          <label class="f">Contraseña nueva<input type="password" name="pass" minlength="8" autocomplete="new-password" required></label>
+          <label class="f">Repítela<input type="password" name="pass2" minlength="8" autocomplete="new-password" required></label>
+        </div>
+        <div class="actions"><button class="btn" type="submit">Cambiar</button></div>
+      </form>
+    </details>
+  </section>
   <section style="margin-top:28px">
     <div class="grid two">
       <div class="card"><h3>Por pasar al Excel</h3><p class="cap">Se aplican en 1–3 minutos. Si te equivocaste, bórralo antes.</p><div class="list" id="pend"><p class="muted" style="font-size:13px">Cargando…</p></div></div>
@@ -412,6 +437,6 @@ input:focus,select:focus,textarea:focus{outline:2px solid color-mix(in oklab,var
 <footer style="margin-top:32px">Granja Porcina · registro de datos</footer>
 </div>
 <div class="toast" id="toast" role="status"></div>
-<script src="admin.js?v=1"></script>
+<script src="admin.js?v=2"></script>
 </body>
 </html>

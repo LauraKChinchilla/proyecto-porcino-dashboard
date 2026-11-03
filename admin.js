@@ -16,7 +16,7 @@
     set(k, v, persist) { try { (persist ? localStorage : sessionStorage).setItem(k, v); } catch (e) { } },
     del(k) { try { localStorage.removeItem(k); sessionStorage.removeItem(k); } catch (e) { } } };
 
-  let TOKEN = null, DATA = null, CONFIG = null;
+  let TOKEN = null, DATA = null, CONFIG = null, USER = null;
 
   function toast(msg, err) { const t = $('toast'); t.textContent = msg; t.className = 'toast show' + (err ? ' err' : ''); clearTimeout(t._h); t._h = setTimeout(() => t.className = 'toast', err ? 6000 : 3500); }
 
@@ -38,6 +38,21 @@
     return dec.decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: unb64(cfg.iv) }, k, unb64(cfg.ct)));
   }
 
+  /* ---------- usuarios ---------- */
+  // v1 = un solo token cifrado (configuración original de Laura); v2 = lista de usuarios.
+  const usuarios = cfg => cfg.v === 2 ? cfg.usuarios : [{ nombre: 'Laura', admin: true, iter: cfg.iter, salt: cfg.salt, iv: cfg.iv, ct: cfg.ct, creado: cfg.creado }];
+  async function entrar(pass) {
+    for (const u of usuarios(CONFIG)) { try { const t = await descifrar(u, pass); return { token: t, user: u }; } catch (e) { } }
+    throw new Error('Contraseña incorrecta');
+  }
+  async function guardarConfig(lista, mensaje) {
+    const cfg = { v: 2, usuarios: lista };
+    const ex = await gh('/contents/admin/config.json'); const sha = ex.ok ? (await ex.json()).sha : undefined;
+    const w = await gh('/contents/admin/config.json', { method: 'PUT', body: JSON.stringify({ message: mensaje, content: utf8b64(JSON.stringify(cfg)), sha }) });
+    if (!w.ok) throw new Error('No se pudo guardar');
+    CONFIG = cfg;
+  }
+
   /* ---------- GitHub ---------- */
   async function gh(path, opts = {}, tok = TOKEN) {
     const r = await fetch(API + path, { ...opts, cache: 'no-store', headers: { Authorization: 'Bearer ' + tok, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', ...(opts.headers || {}) } });
@@ -51,29 +66,29 @@
     try { const r = await fetch('admin/config.json?t=' + Date.now(), { cache: 'no-store' }); if (r.ok) CONFIG = await r.json(); } catch (e) { }
     if (!CONFIG) { $('vSetup').hidden = false; return; }
     const guardada = store.get('granja_pass');
-    if (guardada) { try { TOKEN = await descifrar(CONFIG, guardada); return abrir(); } catch (e) { store.del('granja_pass'); } }
+    if (guardada) { try { const r = await entrar(guardada); TOKEN = r.token; USER = r.user; return abrir(); } catch (e) { store.del('granja_pass'); } }
     $('vLogin').hidden = false; $('pass').focus();
   }
   $('fLogin').addEventListener('submit', async e => {
     e.preventDefault();
     const p = $('pass').value, btn = qs('button', e.target); btn.disabled = true;
-    try { TOKEN = await descifrar(CONFIG, p); store.set('granja_pass', p, $('recordar').checked); $('vLogin').hidden = true; $('toast').className = 'toast'; abrir(); }
+    try { const r = await entrar(p); TOKEN = r.token; USER = r.user; store.set('granja_pass', p, $('recordar').checked); $('vLogin').hidden = true; $('toast').className = 'toast'; abrir(); }
     catch (err) { toast('Contraseña incorrecta', true); }
     btn.disabled = false;
   });
   $('fSetup').addEventListener('submit', async e => {
     e.preventDefault();
-    const tok = $('sToken').value.trim(), p = $('sPass').value, p2 = $('sPass2').value, btn = qs('button', e.target);
+    const tok = $('sToken').value.trim(), p = $('sPass').value, p2 = $('sPass2').value, nombre = $('sNombre').value.trim(), btn = qs('button', e.target);
     if (p !== p2) return toast('Las contraseñas no coinciden', true);
     btn.disabled = true;
     try {
       const r = await gh('', {}, tok); const repo = await r.json();
       if (!r.ok || !repo.permissions || !repo.permissions.push) throw new Error('El token no tiene permiso de escritura en el repositorio');
-      const cfg = await cifrar(tok, p);
+      const cfg = { v: 2, usuarios: [{ nombre, admin: true, ...(await cifrar(tok, p)) }] };
       const ex = await gh('/contents/admin/config.json', {}, tok); const sha = ex.ok ? (await ex.json()).sha : undefined;
       const w = await gh('/contents/admin/config.json', { method: 'PUT', body: JSON.stringify({ message: 'Configurar pantalla de captura', content: utf8b64(JSON.stringify(cfg)), sha }) }, tok);
       if (!w.ok) throw new Error('No se pudo guardar la configuración');
-      CONFIG = cfg; TOKEN = tok; store.set('granja_pass', p, false);
+      CONFIG = cfg; TOKEN = tok; USER = cfg.usuarios[0]; store.set('granja_pass', p, false);
       $('sToken').value = ''; $('vSetup').hidden = true; toast('Configuración guardada'); abrir();
     } catch (err) { toast(err.message, true); }
     btn.disabled = false;
@@ -82,16 +97,53 @@
 
   async function abrir() {
     $('vApp').hidden = false; $('whoBox').hidden = false;
-    const q = store.get('granja_quien');
-    if (q) { if ([...$('quien').options].some(o => o.value === q)) $('quien').value = q; else { $('quien').value = '__otro'; $('quienOtro').hidden = false; $('quienOtro').value = q; } }
+    $('usuario').textContent = USER.nombre;
+    $('vUsuarios').hidden = !USER.admin; if (USER.admin) pintarUsuarios();
     qsa('input[type=date]').forEach(i => { if (!i.value && i.name !== 'refuerzo' && i.name !== 'vence') i.value = hoy(); });
     try { DATA = await (await fetch('data.json?t=' + Date.now(), { cache: 'no-store' })).json(); } catch (e) { DATA = {}; }
     llenarListas(); tipoDinero(); refrescar(); setInterval(refrescar, 20000);
   }
-  $('quien').addEventListener('change', () => { $('quienOtro').hidden = $('quien').value !== '__otro'; guardarQuien(); });
-  $('quienOtro').addEventListener('input', guardarQuien);
-  function guardarQuien() { store.set('granja_quien', quien(), true); }
-  const quien = () => $('quien').value === '__otro' ? ($('quienOtro').value.trim() || 'Otra persona') : $('quien').value;
+  const quien = () => USER ? USER.nombre : 'sin nombre';
+
+  /* ---------- administrar usuarios ---------- */
+  function pintarUsuarios() {
+    $('listaUsuarios').innerHTML = usuarios(CONFIG).map(u => `<div class="item"><div><b>${esc(u.nombre)}</b>${u.admin ? ' <span class="badge good">administra</span>' : ''}${u.nombre === USER.nombre ? ' <span class="muted">(tú)</span>' : ''}</div>${u.nombre === USER.nombre ? '' : `<button type="button" data-quitar="${esc(u.nombre)}">Quitar</button>`}</div>`).join('');
+  }
+  $('fNuevoUsuario').addEventListener('submit', async e => {
+    e.preventDefault(); const f = e.target, btn = qs('button', f);
+    const nombre = f.nombre.value.trim(), p = f.pass.value;
+    if (p !== f.pass2.value) return toast('Las contraseñas no coinciden', true);
+    const lista = usuarios(CONFIG);
+    if (lista.some(u => u.nombre.toLowerCase() === nombre.toLowerCase())) return toast('Ya existe un usuario con ese nombre', true);
+    btn.disabled = true;
+    try {
+      try { await entrar(p); btn.disabled = false; return toast('Esa contraseña ya la usa otro usuario; elige otra', true); } catch (x) { }
+      await guardarConfig([...lista, { nombre, admin: f.admin.checked, ...(await cifrar(TOKEN, p)) }], `Agregar usuario ${nombre}`);
+      f.reset(); pintarUsuarios(); toast(`Usuario ${nombre} creado ✓`);
+    } catch (err) { toast(err.message, true); }
+    btn.disabled = false;
+  });
+  document.addEventListener('click', async e => {
+    const b = e.target.closest('[data-quitar]'); if (!b) return;
+    if (!USER.admin) return;
+    if (!b.dataset.ok) { b.dataset.ok = 1; b.textContent = '¿Seguro? Toca otra vez'; setTimeout(() => { delete b.dataset.ok; b.textContent = 'Quitar'; }, 4000); return; }
+    b.disabled = true;
+    try { await guardarConfig(usuarios(CONFIG).filter(u => u.nombre !== b.dataset.quitar), `Quitar usuario ${b.dataset.quitar}`); pintarUsuarios(); toast(`Usuario ${b.dataset.quitar} quitado`); }
+    catch (err) { toast(err.message, true); b.disabled = false; }
+  });
+  $('fMiPass').addEventListener('submit', async e => {
+    e.preventDefault(); const f = e.target, btn = qs('button', f), p = f.pass.value;
+    if (p !== f.pass2.value) return toast('Las contraseñas no coinciden', true);
+    btn.disabled = true;
+    try {
+      const otros = usuarios(CONFIG).filter(u => u.nombre !== USER.nombre);
+      for (const u of otros) { try { await descifrar(u, p); throw new Error('Esa contraseña ya la usa otro usuario; elige otra'); } catch (x) { if (x.message.startsWith('Esa')) throw x; } }
+      const nuevo = { nombre: USER.nombre, admin: !!USER.admin, ...(await cifrar(TOKEN, p)) };
+      await guardarConfig(usuarios(CONFIG).map(u => u.nombre === USER.nombre ? nuevo : u), `Cambiar contraseña de ${USER.nombre}`);
+      USER = nuevo; let persist = false; try { persist = !!localStorage.getItem('granja_pass'); } catch (x) { } store.set('granja_pass', p, persist); f.reset(); toast('Contraseña cambiada ✓');
+    } catch (err) { toast(err.message, true); }
+    btn.disabled = false;
+  });
 
   /* ---------- pestañas ---------- */
   qsa('#tabs button').forEach(b => b.addEventListener('click', () => {
