@@ -1,10 +1,10 @@
 {
- "generado": "2026-11-02T20:58:13.872Z",
+ "generado": "2026-11-03T23:50:36.045Z",
  "fuente": "OneDrive · Proyecto_Porcino",
  "archivos": [
   {
    "nombre": "Granja_Porcina_Facil.xlsx",
-   "modificado": "2026-11-02T20:57:54Z",
+   "modificado": "2026-11-03T23:50:34Z",
    "por": "Guest Contributor"
   }
  ],
@@ -593,6 +593,19 @@
    "entrada": 9200,
    "salida": 0,
    "cat": "Ventas"
+  },
+  {
+   "fila": 50,
+   "fecha": "2026-11-03",
+   "concepto": "1 bionova 4 y  un bionova 2",
+   "tipo": "Concentrado",
+   "socio": null,
+   "nota": "[dashboard: Wiliam]",
+   "cantidad": null,
+   "precio": null,
+   "entrada": 0,
+   "salida": 2020,
+   "cat": "Concentrado"
   }
  ],
  "aportes": [
