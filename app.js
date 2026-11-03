@@ -314,15 +314,16 @@
   }
 
   /* ---------------- Frescura de datos ---------------- */
-  let lastRun = null, live = false, liveSince = null;
+  let lastRun = null, live = false, liveSince = null, CAPS = [];
   function renderFresh() {
     if (!DATA) return;
     const mods = (DATA.archivos || []).map(a => a.modificado).filter(Boolean).sort();
     const lastMod = mods[mods.length - 1];
     if (live) $('fRead').innerHTML = `<b>hace menos de 2 min</b> <span class="muted">· lectura continua activa desde ${fmtTS(liveSince)}</span>`;
     else $('fRead').innerHTML = lastRun ? `<b>${ago(lastRun)}</b> <span class="muted">(${fmtTS(lastRun)})</span>` : '<span class="muted">consultando…</span>';
-    const quien = p => !p ? 'no se sabe quién' : /guest|invitado/i.test(p) ? 'alguien con el vínculo, sin iniciar sesión' : p;
     const ultimo = (DATA.archivos || []).slice().sort((a, b) => a.modificado < b.modificado ? 1 : -1)[0];
+    const cap = CAPS.find(c => c.estado === 'ok' && ultimo && Math.abs(new Date(c.aplicado) - new Date(ultimo.modificado)) < 5 * 60e3);
+    const quien = p => cap && p === (ultimo && ultimo.por) ? `${cap.quien || 'sin nombre'} (desde la pantalla de registro)` : !p ? 'no se sabe quién' : /guest|invitado/i.test(p) ? 'alguien con el vínculo, sin iniciar sesión' : p;
     $('fMod').innerHTML = lastMod ? `<b>${ago(lastMod)}</b> <span class="muted">(${fmtTS(lastMod)})</span><br><span style="font-size:12.5px">por <b>${esc(quien(ultimo && ultimo.por))}</b></span>` : '—';
     $('fFiles').innerHTML = (DATA.archivos || []).map(a => `${esc(a.nombre)} · ${fmtTS(a.modificado)} · ${esc(quien(a.por))}`).join('<br>');
     const stale = !live && lastRun && (Date.now() - new Date(lastRun)) > 30 * 60e3;
@@ -348,6 +349,7 @@
       const r = await fetch('data.json?t=' + Date.now(), { cache: 'no-store' });
       if (!r.ok) throw new Error(r.status);
       const d = await r.json();
+      try { const c = await fetch('capturas.json?t=' + Date.now(), { cache: 'no-store' }); if (c.ok) CAPS = await c.json(); } catch (e) { }
       if (d.generado !== lastGen) { DATA = d; lastGen = d.generado; render(); $('err').hidden = true; }
       renderFresh();
     } catch (e) { $('err').hidden = false; }

@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registrar datos · Granja</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#f6f4ef; --surface:#fcfcfb; --surface-2:#f1eee6; --line:#e3dfd4;
+  --text:#1a1915; --text-2:#52514e; --muted:#85837b;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100;
+  --good:#1f8a4c; --warn:#b77400; --bad:#c43c3b;
+  --accent:#8a4b2a;
+  --shadow:0 1px 2px rgba(30,25,10,.05),0 4px 14px rgba(30,25,10,.05);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#121211; --surface:#1a1a19; --surface-2:#232321; --line:#33322f;
+    --text:#f0efec; --text-2:#c3c2b7; --muted:#8e8c84;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+    --good:#45b97a; --warn:#e0a332; --bad:#e66767; --accent:#d9956b;
+    --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#121211; --surface:#1a1a19; --surface-2:#232321; --line:#33322f;
+  --text:#f0efec; --text-2:#c3c2b7; --muted:#8e8c84;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+  --good:#45b97a; --warn:#e0a332; --bad:#e66767; --accent:#d9956b;
+  --shadow:none;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font:15px/1.5 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px 64px}
+header.top{padding:40px 0 24px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600}
+h1{font-family:Fraunces,Georgia,serif;font-size:clamp(30px,5vw,46px);line-height:1.08;margin:8px 0 10px;letter-spacing:-.01em}
+h2{font-family:Fraunces,Georgia,serif;font-size:24px;margin:0 0 4px}
+.sub{color:var(--text-2);max-width:760px;margin:0}
+.period{display:inline-flex;gap:8px;align-items:center;margin-top:16px;background:var(--surface);border:1px solid var(--line);padding:6px 12px;border-radius:999px;font-size:13px;color:var(--text-2)}
+.period b{color:var(--text)}
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 24px;position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0}
+nav.tabs a{font-size:13px;color:var(--text-2);text-decoration:none;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+nav.tabs a:hover{color:var(--text);border-color:var(--muted)}
+section{margin:0 0 44px;scroll-margin-top:64px}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.sec-head p{margin:0;color:var(--text-2);font-size:14px;max-width:640px}
+.grid{display:grid;gap:14px}
+.kpis{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow);min-width:0}
+.kpi .lbl{font-size:12.5px;color:var(--text-2);font-weight:500}
+.kpi .val{font-family:Fraunces,Georgia,serif;font-size:30px;font-weight:700;margin:4px 0 2px;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.kpi .note{font-size:12.5px;color:var(--muted)}
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--surface-2)}
+.badge.good{color:var(--good)} .badge.warn{color:var(--warn)} .badge.bad{color:var(--bad)}
+.two{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.card h3{font-size:15px;margin:0 0 2px;font-weight:600}
+.card .cap{font-size:12.5px;color:var(--muted);margin:0 0 14px}
+/* bars */
+.hbar{display:grid;grid-template-columns:minmax(120px,190px) 1fr auto;gap:10px;align-items:center;padding:5px 0;cursor:default}
+.hbar .n{font-size:13px;color:var(--text-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hbar .t{height:14px;background:var(--surface-2);border-radius:4px;overflow:hidden}
+.hbar .f{height:100%;border-radius:4px;background:var(--s1)}
+.hbar .v{font-size:13px;font-variant-numeric:tabular-nums;color:var(--text);min-width:86px;text-align:right}
+.hbar:hover .f{filter:brightness(1.1)}
+.hbar:hover .n{color:var(--text)}
+/* split bar */
+.split{display:flex;height:18px;border-radius:5px;overflow:hidden;gap:2px;margin:10px 0 8px}
+.split div{height:100%}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--text-2)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:8px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--text-2);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.tot td{font-weight:600;border-top:2px solid var(--line)}
+.tbl-wrap{overflow-x:auto}
+.muted{color:var(--muted)}
+/* timeline */
+.tl{position:relative;padding:8px 0 0}
+.tl-row{display:grid;grid-template-columns:90px 1fr;gap:12px;padding:10px 0;border-bottom:1px dashed var(--line)}
+.tl-row:last-child{border:0}
+.tl-m{font-weight:600;font-size:13px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12px;padding:3px 9px;border-radius:999px;border:1px solid var(--line);background:var(--surface-2);color:var(--text-2)}
+.chip b{color:var(--text);font-weight:600}
+.chip.done{border-color:transparent;background:color-mix(in oklab,var(--s3) 18%,transparent)}
+.chip.next{border-color:var(--s1)}
+/* projection */
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:16px}
+.ctl label{display:flex;justify-content:space-between;font-size:13px;color:var(--text-2);margin-bottom:6px}
+.ctl label b{color:var(--text);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--s1)}
+.chart{position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.tip{position:absolute;pointer-events:none;background:var(--text);color:var(--bg);font-size:12px;padding:8px 10px;border-radius:8px;opacity:0;transition:opacity .12s;white-space:nowrap;z-index:3;line-height:1.45}
+.tip b{font-weight:600}
+.callout{border-left:3px solid var(--accent);background:var(--surface);padding:14px 16px;border-radius:0 10px 10px 0;font-size:14px;color:var(--text-2)}
+.callout b{color:var(--text)}
+ul.notes{margin:0;padding-left:18px;color:var(--text-2);font-size:14px}
+ul.notes li{margin:6px 0}
+footer{color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padding-top:16px}
+.toggle{position:fixed;right:16px;bottom:16px;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:999px;padding:8px 12px;font:inherit;font-size:12px;cursor:pointer;box-shadow:var(--shadow)}
+@media (max-width:560px){
+  .hbar{grid-template-columns:110px 1fr auto}
+  .hbar .v{min-width:70px;font-size:12px}
+  .kpi .val{font-size:26px}
+}
+.fresh{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:16px}
+.fresh .card{padding:12px 14px}
+.fresh .lbl{font-size:12px;color:var(--text-2)}
+.fresh .v{font-size:14px;margin-top:2px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:0}
+.dot.live{background:var(--good);box-shadow:0 0 0 0 color-mix(in oklab,var(--good) 60%,transparent);animation:pulse 2s infinite}
+.dot.stale{background:var(--warn)}
+@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in oklab,var(--good) 55%,transparent)}70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
+@media (prefers-reduced-motion:reduce){.dot.live{animation:none}}
+.chip.plan{border-style:dashed}
+.chip.late{border-color:var(--warn);color:var(--warn)}
+.err{background:color-mix(in oklab,var(--bad) 14%,var(--surface));border:1px solid var(--bad);color:var(--text);padding:10px 14px;border-radius:10px;margin-bottom:16px;font-size:14px}
+.three{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+
+.wrap{max-width:860px}
+.who{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--text-2);margin-top:14px}
+.who select,.who input{width:auto}
+.seg{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 14px}
+.seg button{font:inherit;font-size:13.5px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--text-2);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--text);color:var(--bg);border-color:var(--text)}
+.seg.sub button{font-size:12.5px;padding:6px 12px}
+.seg.sub button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+form .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:12px}
+label.f{display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--text-2);font-weight:500}
+label.f small{font-weight:400;color:var(--muted)}
+input,select,textarea{font:inherit;font-size:15px;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;min-height:44px}
+textarea{min-height:64px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid color-mix(in oklab,var(--accent) 55%,transparent);outline-offset:1px;border-color:var(--accent)}
+.radio{display:flex;gap:8px}
+.radio label{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);border-radius:10px;padding:10px;cursor:pointer;font-weight:600;min-height:44px}
+.radio input{width:auto;min-height:0}
+.radio label:has(input:checked){border-color:var(--accent);background:color-mix(in oklab,var(--accent) 12%,transparent);color:var(--text)}
+.check{display:flex;gap:8px;align-items:center;font-size:13.5px;color:var(--text-2)}
+.check input{width:auto;min-height:0}
+.hint{font-size:12.5px;color:var(--muted);margin:-4px 0 12px}
+.hint b{color:var(--text-2)}
+.btn{font:inherit;font-weight:600;font-size:15px;border:0;border-radius:10px;padding:12px 18px;background:var(--accent);color:#fff;cursor:pointer;min-height:46px}
+.btn.sec{background:var(--surface-2);color:var(--text)}
+.btn:disabled{opacity:.55;cursor:wait}
+.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:6px}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:12px 16px;border-radius:10px;font-size:14px;box-shadow:var(--shadow);opacity:0;transition:opacity .2s;z-index:20;max-width:calc(100% - 32px)}
+.toast.show{opacity:1}
+.toast.err{background:var(--bad);color:#fff}
+.list{display:flex;flex-direction:column;gap:8px}
+.item{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13.5px}
+.item .m{color:var(--muted);font-size:12px;margin-top:2px}
+.item button{font:inherit;font-size:12px;border:1px solid var(--line);background:transparent;color:var(--bad);border-radius:8px;padding:4px 8px;cursor:pointer}
+.lock{max-width:420px;margin:40px auto}
+[hidden]{display:none!important}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <div class="eyebrow"><a href="./" style="color:inherit;text-decoration:none">← Volver al dashboard</a></div>
+  <h1>Registrar datos</h1>
+  <p class="sub">Lo que guardes aquí se pasa solo al Excel <b>Granja_Porcina_Facil.xlsx</b> y al dashboard en 1–3 minutos.</p>
+  <div class="who" id="whoBox" hidden>Registra:
+    <select id="quien"><option>Laura</option><option>Wilian</option><option>Portillo</option><option value="__otro">Otra persona…</option></select>
+    <input id="quienOtro" placeholder="Nombre" hidden style="max-width:180px">
+    <button class="btn sec" id="salir" type="button" style="min-height:34px;padding:6px 12px;font-size:13px">Cerrar sesión</button>
+  </div>
+</header>
+
+<!-- Entrar -->
+<section id="vLogin" class="lock" hidden>
+  <div class="card">
+    <h3>Entrar</h3>
+    <p class="cap">Escribe la contraseña de la granja.</p>
+    <form id="fLogin">
+      <label class="f">Contraseña<input type="password" id="pass" autocomplete="current-password" required></label>
+      <label class="check" style="margin:10px 0 14px"><input type="checkbox" id="recordar"> Recordar en este dispositivo</label>
+      <button class="btn" type="submit" style="width:100%">Entrar</button>
+    </form>
+  </div>
+</section>
+
+<!-- Configuración inicial -->
+<section id="vSetup" class="lock" hidden>
+  <div class="card">
+    <h3>Configuración inicial (una sola vez)</h3>
+    <p class="cap">Pega el token de GitHub y elige la contraseña que usarán todos para registrar datos. El token se guarda cifrado con esa contraseña; sin ella nadie puede usarlo.</p>
+    <form id="fSetup">
+      <label class="f">Token de GitHub<input type="password" id="sToken" autocomplete="off" required placeholder="github_pat_…"></label>
+      <div class="row" style="margin-top:12px">
+        <label class="f">Contraseña nueva <small>mínimo 10 caracteres</small><input type="password" id="sPass" minlength="10" autocomplete="new-password" required></label>
+        <label class="f">Repite la contraseña<input type="password" id="sPass2" minlength="10" autocomplete="new-password" required></label>
+      </div>
+      <button class="btn" type="submit" style="width:100%">Guardar configuración</button>
+    </form>
+  </div>
+</section>
+
+<!-- Formularios -->
+<main id="vApp" hidden>
+  <div class="seg" role="tablist" id="tabs">
+    <button type="button" data-t="dinero" aria-pressed="true">💰 Dinero</button>
+    <button type="button" data-t="cerdas" aria-pressed="false">🐖 Cerdas y lechones</button>
+    <button type="button" data-t="hato" aria-pressed="false">🐗 Hato y engorde</button>
+    <button type="button" data-t="sanidad" aria-pressed="false">💉 Vacunas y bodega</button>
+  </div>
+
+  <div class="card">
+    <!-- DINERO -->
+    <form data-panel="dinero" data-tipo="dinero">
+      <h3>Gasto, venta o aporte</h3><p class="cap">Una fila nueva en la hoja Dinero.</p>
+      <div class="row">
+        <div class="f"><span class="lbl" style="font-size:13px;color:var(--text-2);font-weight:500">¿Entra o sale dinero?</span>
+          <div class="radio"><label><input type="radio" name="movimiento" value="Sale" checked> Sale</label><label><input type="radio" name="movimiento" value="Entra"> Entra</label></div></div>
+        <label class="f">Fecha<input type="date" name="fecha" required></label>
+      </div>
+      <div class="row">
+        <label class="f">Tipo<select name="tipo" required></select></label>
+        <label class="f">Monto (L)<input type="number" name="monto" min="1" step="1" inputmode="numeric" required></label>
+      </div>
+      <label class="f" style="margin-bottom:12px">Descripción<input name="descripcion" required placeholder="Ej.: 10 bolsas de concentrado de gestación"></label>
+      <div class="row" data-show="aporte" hidden>
+        <label class="f">Socio<select name="socio"><option>Wilian</option><option>Erick</option></select></label>
+        <label class="f">Tipo de aporte<select name="tipoAporte"><option>Efectivo</option><option>Igualación</option><option>En especie</option></select></label>
+      </div>
+      <label class="f" style="margin-bottom:12px">Nota <small>opcional</small><input name="nota"></label>
+      <div class="actions"><button class="btn" type="submit">Guardar</button></div>
+    </form>
+
+    <!-- CERDAS -->
+    <div data-panel="cerdas" hidden>
+      <div class="seg sub" data-sub="cerdas">
+        <button type="button" data-s="monta" aria-pressed="true">Monta</button>
+        <button type="button" data-s="parto" aria-pressed="false">Parto</button>
+        <button type="button" data-s="muerte_lechones" aria-pressed="false">Murió un lechón</button>
+        <button type="button" data-s="venta_lechones" aria-pressed="false">Venta de lechones</button>
+      </div>
+      <form data-sp="monta" data-tipo="monta">
+        <p class="cap">Agrega una fila en la hoja Cerdas. El parto esperado se calcula solo (114 días).</p>
+        <div class="row">
+          <label class="f">Cerda<select name="cerda" data-list="cerdas" required></select></label>
+          <label class="f">Verraco<select name="verraco" data-list="verracos"></select></label>
+          <label class="f">Fecha de monta<input type="date" name="fecha" required></label>
+        </div>
+        <p class="hint" data-hint="monta"></p>
+        <label class="f" style="margin-bottom:12px">Nota <small>opcional</small><input name="nota"></label>
+        <div class="actions"><button class="btn" type="submit">Guardar monta</button></div>
+      </form>
+      <form data-sp="parto" data-tipo="parto" hidden>
+        <p class="cap">Completa la fila de la monta de esa cerda con la fecha de parto y los nacidos vivos.</p>
+        <div class="row">
+          <label class="f">Cerda<select name="cerda" data-list="cerdas" required></select></label>
+          <label class="f">Fecha de parto<input type="date" name="fecha" required></label>
+        </div>
+        <p class="hint" data-hint="parto"></p>
+        <div class="row">
+          <label class="f">Nacidos vivos<input type="number" name="vivos" min="0" step="1" inputmode="numeric" required></label>
+          <label class="f">Nacidos muertos <small>opcional</small><input type="number" name="muertosAlNacer" min="0" step="1" inputmode="numeric"></label>
+        </div>
+        <label class="f" style="margin-bottom:12px">Nota <small>opcional</small><input name="nota" placeholder="Ej.: buen tamaño, 1.4 kg promedio"></label>
+        <div class="actions"><button class="btn" type="submit">Guardar parto</button></div>
+      </form>
+      <form data-sp="muerte_lechones" data-tipo="muerte_lechones" hidden>
+        <p class="cap">Suma en la columna Muertos de la camada.</p>
+        <div class="row">
+          <label class="f">Camada de la cerda<select name="cerda" data-list="camadas" required></select></label>
+          <label class="f">¿Cuántos?<input type="number" name="cantidad" min="1" step="1" value="1" inputmode="numeric" required></label>
+          <label class="f">Fecha<input type="date" name="fecha" required></label>
+        </div>
+        <label class="f" style="margin-bottom:12px">Causa <small>opcional</small><input name="nota" placeholder="Ej.: aplastado, diarrea"></label>
+        <div class="actions"><button class="btn" type="submit">Guardar</button></div>
+      </form>
+      <form data-sp="venta_lechones" data-tipo="venta_lechones" hidden>
+        <p class="cap">Suma en Vendidos de la camada y, si quieres, anota el dinero en la hoja Dinero.</p>
+        <div class="row">
+          <label class="f">Camada de la cerda<select name="cerda" data-list="camadas" required></select></label>
+          <label class="f">¿Cuántos?<input type="number" name="cantidad" min="1" step="1" inputmode="numeric" required></label>
+          <label class="f">Fecha<input type="date" name="fecha" required></label>
+        </div>
+        <div class="row">
+          <label class="f">Precio por lechón (L)<input type="number" name="precio" min="0" step="1" inputmode="numeric"></label>
+          <label class="f">Total (L)<input type="number" name="monto" min="0" step="1" inputmode="numeric"></label>
+          <label class="f">Comprador <small>opcional</small><input name="comprador"></label>
+        </div>
+        <label class="check" style="margin-bottom:12px"><input type="checkbox" name="conDinero" checked> Anotar también el dinero en la hoja Dinero</label>
+        <div class="actions"><button class="btn" type="submit">Guardar venta</button></div>
+      </form>
+    </div>
+
+    <!-- HATO -->
+    <div data-panel="hato" hidden>
+      <div class="seg sub" data-sub="hato">
+        <button type="button" data-s="hato_alta" aria-pressed="true">Entra un animal</button>
+        <button type="button" data-s="hato_baja" aria-pressed="false">Sale un animal</button>
+        <button type="button" data-s="engorde" aria-pressed="false">Cerdos de engorde</button>
+      </div>
+      <form data-sp="hato_alta" data-tipo="hato_alta">
+        <p class="cap">Agrega una cerda o verraco a la hoja Hato.</p>
+        <div class="row">
+          <label class="f">Código<input name="codigo" required placeholder="Ej.: 21 o L3"></label>
+          <label class="f">Tipo<select name="tipo"><option>Cerda</option><option>Cerda de reemplazo</option><option>Verraco</option></select></label>
+          <label class="f">Fecha de entrada<input type="date" name="fecha" required></label>
+        </div>
+        <div class="row">
+          <label class="f">Origen<input name="origen" placeholder="Ej.: comprada a…, nacida en la granja"></label>
+          <label class="f">Costo (L) <small>opcional, se anota en Dinero</small><input type="number" name="monto" min="0" step="1" inputmode="numeric"></label>
+        </div>
+        <label class="f" style="margin-bottom:12px">Nota <small>opcional</small><input name="nota"></label>
+        <div class="actions"><button class="btn" type="submit">Guardar</button></div>
+      </form>
+      <form data-sp="hato_baja" data-tipo="hato_baja" hidden>
+        <p class="cap">Marca en la hoja Hato que el animal ya no está.</p>
+        <div class="row">
+          <label class="f">Animal<select name="codigo" data-list="hatoActivos" required></select></label>
+          <label class="f">Motivo<select name="estado"><option>Vendida</option><option>Muerta</option><option>Descartada</option></select></label>
+          <label class="f">Fecha<input type="date" name="fecha" required></label>
+        </div>
+        <div class="row" data-show="ventaHato">
+          <label class="f">Precio de venta (L) <small>se anota en Dinero</small><input type="number" name="monto" min="0" step="1" inputmode="numeric"></label>
+        </div>
+        <label class="f" style="margin-bottom:12px">Nota <small>opcional</small><input name="nota"></label>
+        <div class="actions"><button class="btn" type="submit">Guardar</button></div>
+      </form>
+      <form data-sp="engorde" data-tipo="engorde" hidden>
+        <p class="cap">Compras, lechones que pasan a engorde, ventas o muertes, por lote.</p>
+        <div class="row">
+          <label class="f">Lote<select name="lote" data-list="lotes" required></select></label>
+          <label class="f" data-show="loteNuevo" hidden>Nombre del lote nuevo<input name="loteNuevo" placeholder="Ej.: Lote 2"></label>
+          <label class="f">Movimiento<select name="movimiento"><option>Venta</option><option>Muerte</option><option>Compra</option><option>Paso de lechones</option></select></label>
+        </div>
+        <div class="row">
+          <label class="f">Cantidad<input type="number" name="cantidad" min="1" step="1" inputmode="numeric" required></label>
+          <label class="f" data-show="montoEng">Monto total (L) <small>se anota en Dinero</small><input type="number" name="monto" min="0" step="1" inputmode="numeric"></label>
+          <label class="f">Peso total (lb) <small>opcional</small><input type="number" name="peso" min="0" step="0.1" inputmode="decimal"></label>
+          <label class="f">Fecha<input type="date" name="fecha" required></label>
+        </div>
+        <label class="f" style="margin-bottom:12px">Nota <small>opcional</small><input name="nota"></label>
+        <div class="actions"><button class="btn" type="submit">Guardar</button></div>
+      </form>
+    </div>
+
+    <!-- SANIDAD -->
+    <div data-panel="sanidad" hidden>
+      <div class="seg sub" data-sub="sanidad">
+        <button type="button" data-s="vacuna" aria-pressed="true">Vacuna o tratamiento</button>
+        <button type="button" data-s="medicina" aria-pressed="false">Medicinas</button>
+        <button type="button" data-s="concentrado" aria-pressed="false">Concentrado</button>
+      </div>
+      <form data-sp="vacuna" data-tipo="vacuna">
+        <p class="cap">Una fila nueva en la hoja Vacunas.</p>
+        <div class="row">
+          <label class="f">Fecha<input type="date" name="fecha" required></label>
+          <label class="f">Cerda o lote<input name="cerda" list="dlCerdas" required placeholder="Ej.: 04, Lote 1, lechones de la 02"></label>
+          <label class="f">Producto<input name="producto" list="dlProductos" required></label>
+        </div>
+        <div class="row">
+          <label class="f">Dosis<input name="dosis" placeholder="Ej.: 2 ml"></label>
+          <label class="f">Próximo refuerzo <small>opcional</small><input type="date" name="refuerzo"></label>
+        </div>
+        <p class="hint">Atajos para el refuerzo: <a href="#" data-ref="14">+14 días</a> · <a href="#" data-ref="21">+21 días</a> · <a href="#" data-ref="28">+28 días</a></p>
+        <label class="f" style="margin-bottom:12px">Nota <small>opcional</small><input name="nota"></label>
+        <div class="actions"><button class="btn" type="submit">Guardar</button></div>
+      </form>
+      <form data-sp="medicina" data-tipo="medicina" hidden>
+        <p class="cap">Actualiza la existencia en la hoja Bodega.</p>
+        <div class="row">
+          <label class="f">Medicina<input name="nombre" list="dlMedicinas" required></label>
+          <label class="f">¿Qué pasó?<select name="modo"><option value="sumar">Compré (sumar frascos)</option><option value="poner">Conté lo que hay (poner cantidad)</option></select></label>
+          <label class="f">Frascos<input type="number" name="cantidad" min="0" step="1" inputmode="numeric" required></label>
+        </div>
+        <p class="hint" data-hint="medicina"></p>
+        <div class="row">
+          <label class="f">Vence <small>opcional</small><input type="month" name="vence"></label>
+          <label class="f">Tipo <small>si es nueva</small><input name="tipoMed" placeholder="Ej.: Antibiótico"></label>
+        </div>
+        <div class="actions"><button class="btn" type="submit">Guardar</button></div>
+      </form>
+      <form data-sp="concentrado" data-tipo="concentrado" hidden>
+        <p class="cap">Actualiza las bolsas en la hoja Bodega. Si fue compra, anota el gasto en Dinero aparte.</p>
+        <div class="row">
+          <label class="f">Concentrado<input name="tipo" list="dlConcentrados" required></label>
+          <label class="f">¿Qué pasó?<select name="modo"><option value="sumar">Compré (sumar bolsas)</option><option value="poner">Conté lo que hay (poner cantidad)</option></select></label>
+          <label class="f">Bolsas<input type="number" name="cantidad" min="0" step="0.5" inputmode="decimal" required></label>
+          <label class="f">Vence <small>opcional</small><input type="date" name="vence"></label>
+        </div>
+        <p class="hint" data-hint="concentrado"></p>
+        <div class="actions"><button class="btn" type="submit">Guardar</button></div>
+      </form>
+    </div>
+  </div>
+
+  <section style="margin-top:28px">
+    <div class="grid two">
+      <div class="card"><h3>Por pasar al Excel</h3><p class="cap">Se aplican en 1–3 minutos. Si te equivocaste, bórralo antes.</p><div class="list" id="pend"><p class="muted" style="font-size:13px">Cargando…</p></div></div>
+      <div class="card"><h3>Ya en el Excel</h3><p class="cap">Últimas capturas aplicadas</p><div class="list" id="hechas"><p class="muted" style="font-size:13px">Cargando…</p></div></div>
+    </div>
+  </section>
+</main>
+
+<datalist id="dlCerdas"></datalist><datalist id="dlProductos"></datalist><datalist id="dlMedicinas"></datalist><datalist id="dlConcentrados"></datalist>
+<footer style="margin-top:32px">Granja Porcina · registro de datos</footer>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script src="admin.js?v=1"></script>
+</body>
+</html>

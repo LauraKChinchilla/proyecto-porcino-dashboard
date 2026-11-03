@@ -135,7 +135,7 @@ footer{color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padd
   <div class="eyebrow">Proyecto Porcino · Socios Wilian &amp; Erick</div>
   <h1>Dashboard financiero y productivo de la granja</h1>
   <p class="sub">Se alimenta del Excel <b>Granja_Porcina_Facil.xlsx</b> de la carpeta Proyecto_Porcino en OneDrive. Cuando alguien lo edita, esta página se actualiza sola en pocos minutos.</p>
-  <div class="period" id="periodo">Cargando datos…</div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center"><div class="period" id="periodo">Cargando datos…</div><a href="admin.html" style="margin-top:16px;display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;font-size:13.5px;padding:8px 14px;border-radius:999px">✎ Registrar datos</a></div>
   <div class="fresh">
     <div class="card"><div class="lbl"><span class="dot live" id="liveDot"></span><span id="liveTxt">En vivo</span> · Última lectura de los Excel</div><div class="v" id="fRead">…</div></div>
     <div class="card"><div class="lbl">Última modificación de los Excel</div><div class="v" id="fMod">…</div></div>
@@ -241,6 +241,6 @@ footer{color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padd
 <footer>Fuente: Granja_Porcina_Facil.xlsx en la carpeta OneDrive “Proyecto_Porcino” · Montos en lempiras (L)</footer>
 </div>
 <button class="toggle" id="themeBtn" type="button">◐ Tema</button>
-<script src="app.js?v=7"></script>
+<script src="app.js?v=8"></script>
 </body>
 </html>
