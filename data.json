@@ -1,10 +1,10 @@
 {
- "generado": "2026-11-03T23:50:36.045Z",
+ "generado": "2026-11-03T23:52:42.563Z",
  "fuente": "OneDrive · Proyecto_Porcino",
  "archivos": [
   {
    "nombre": "Granja_Porcina_Facil.xlsx",
-   "modificado": "2026-11-03T23:50:34Z",
+   "modificado": "2026-11-03T23:52:41Z",
    "por": "Guest Contributor"
   }
  ],
@@ -605,6 +605,19 @@
    "precio": null,
    "entrada": 0,
    "salida": 2020,
+   "cat": "Concentrado"
+  },
+  {
+   "fila": 51,
+   "fecha": "2026-11-03",
+   "concepto": "2 bolsas gestacion",
+   "tipo": "Concentrado",
+   "socio": null,
+   "nota": "[dashboard: Wiliam]",
+   "cantidad": null,
+   "precio": null,
+   "entrada": 0,
+   "salida": 1390,
    "cat": "Concentrado"
   }
  ],
