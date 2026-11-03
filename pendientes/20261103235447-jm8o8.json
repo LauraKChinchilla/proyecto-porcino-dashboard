@@ -1,0 +1,14 @@
+{
+ "id": "20261103235447-jm8o8",
+ "creado": "2026-11-03T23:54:47.598Z",
+ "quien": "Wiliam",
+ "tipo": "dinero",
+ "datos": {
+  "movimiento": "Sale",
+  "fecha": "2026-11-03",
+  "tipo": "Concentrado",
+  "monto": "3500",
+  "descripcion": "5 bolsas de lactancia"
+ },
+ "resumen": "Sale L 3,500 · Concentrado · 5 bolsas de lactancia"
+}
