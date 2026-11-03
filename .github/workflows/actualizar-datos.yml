@@ -1,6 +1,6 @@
 name: Actualizar datos desde OneDrive
 
-# Lectura continua: cada ejecución revisa los Excel cada 2 minutos durante ~55 min
+# Lectura continua: cada ejecución revisa los Excel cada minuto durante ~55 min
 # y al terminar lanza la siguiente. El horario (cada 15 min) solo sirve de respaldo
 # por si la cadena se corta; si ya hay una ejecución activa, queda en espera.
 on:
@@ -30,8 +30,10 @@ jobs:
           node-version: 20
       - name: Instalar lector de Excel
         working-directory: scripts
-        run: npm install --no-save --no-package-lock xlsx@0.18.5
-      - name: Leer los Excel cada 2 minutos
+        run: |
+          npm install --no-save --no-package-lock xlsx@0.18.5
+          pip install --quiet openpyxl==3.1.5
+      - name: Aplicar capturas y leer los Excel cada minuto
         env:
           ONEDRIVE_SHARE_URL: ${{ secrets.ONEDRIVE_SHARE_URL }}
         run: |
@@ -40,16 +42,19 @@ jobs:
           fin=$((SECONDS + 55*60))
           while [ $SECONDS -lt $fin ]; do
             git pull -q --rebase origin main || true
+            if ls pendientes/*.json >/dev/null 2>&1; then
+              python3 scripts/aplicar.py || echo "No se pudieron aplicar las capturas; se reintenta en la próxima vuelta"
+            fi
             if node scripts/update.js; then
-              git add data.json
+              git add -A .
               if ! git diff --cached --quiet; then
                 git commit -q -m "Datos actualizados desde OneDrive"
                 git push -q origin HEAD:main || (git pull -q --rebase origin main && git push -q origin HEAD:main) || echo "No se pudo subir; se reintenta en la próxima vuelta"
               fi
             else
-              echo "Falló la lectura; se reintenta en 2 minutos"
+              echo "Falló la lectura; se reintenta en 1 minuto"
             fi
-            sleep 120
+            sleep 60
           done
       - name: Lanzar la siguiente ronda
         if: always()
