@@ -1,10 +1,10 @@
 {
- "generado": "2026-11-04T00:23:36.107Z",
+ "generado": "2026-11-04T00:24:40.963Z",
  "fuente": "OneDrive · Proyecto_Porcino",
  "archivos": [
   {
    "nombre": "Granja_Porcina_Facil.xlsx",
-   "modificado": "2026-11-04T00:23:13Z",
+   "modificado": "2026-11-04T00:24:34Z",
    "por": "Guest Contributor"
   }
  ],
@@ -609,7 +609,7 @@
   },
   {
    "fila": 51,
-   "fecha": "2026-11-03",
+   "fecha": "2026-10-31",
    "concepto": "2 bolsas gestacion",
    "tipo": "Concentrado",
    "socio": null,
@@ -622,7 +622,7 @@
   },
   {
    "fila": 52,
-   "fecha": "2026-11-03",
+   "fecha": "2026-10-31",
    "concepto": "7 bolsas",
    "tipo": "flete",
    "socio": null,
@@ -632,6 +632,19 @@
    "entrada": 0,
    "salida": 490,
    "cat": "flete"
+  },
+  {
+   "fila": 53,
+   "fecha": "2026-10-31",
+   "concepto": "5 bolsas de lactancia",
+   "tipo": "Concentrado",
+   "socio": null,
+   "nota": null,
+   "cantidad": null,
+   "precio": null,
+   "entrada": 0,
+   "salida": 3500,
+   "cat": "Concentrado"
   }
  ],
  "aportes": [
