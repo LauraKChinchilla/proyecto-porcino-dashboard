@@ -1,5 +1,35 @@
 [
  {
+  "id": "20261104000204-0wwf3",
+  "creado": "2026-11-04T00:02:04.531Z",
+  "quien": "Wiliam",
+  "tipo": "dinero",
+  "resumen": "Sale L 490 · Flete / comisión · 7 bolsas que me trajo Roel Cordoba",
+  "aplicado": "2026-11-04T00:51:32+00:00",
+  "estado": "ok",
+  "mensaje": "Fila 56 de Dinero"
+ },
+ {
+  "id": "20261104000006-17a0y",
+  "creado": "2026-11-04T00:00:06.734Z",
+  "quien": "Wiliam",
+  "tipo": "dinero",
+  "resumen": "Sale L 70 · Flete / comisión · 7 bolsas que le encargue al de encomiendas.",
+  "aplicado": "2026-11-04T00:51:32+00:00",
+  "estado": "ok",
+  "mensaje": "Fila 55 de Dinero"
+ },
+ {
+  "id": "20261103235447-jm8o8",
+  "creado": "2026-11-03T23:54:47.598Z",
+  "quien": "Wiliam",
+  "tipo": "dinero",
+  "resumen": "Sale L 3,500 · Concentrado · 5 bolsas de lactancia",
+  "aplicado": "2026-11-04T00:51:32+00:00",
+  "estado": "ok",
+  "mensaje": "Fila 54 de Dinero"
+ },
+ {
   "id": "20261103235208-m2d5x",
   "creado": "2026-11-03T23:52:08.462Z",
   "quien": "Wiliam",

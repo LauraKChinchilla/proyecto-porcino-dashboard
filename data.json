@@ -1,10 +1,10 @@
 {
- "generado": "2026-11-04T00:24:40.963Z",
+ "generado": "2026-11-04T00:51:33.648Z",
  "fuente": "OneDrive · Proyecto_Porcino",
  "archivos": [
   {
    "nombre": "Granja_Porcina_Facil.xlsx",
-   "modificado": "2026-11-04T00:24:34Z",
+   "modificado": "2026-11-04T00:51:32Z",
    "por": "Guest Contributor"
   }
  ],
@@ -645,6 +645,45 @@
    "entrada": 0,
    "salida": 3500,
    "cat": "Concentrado"
+  },
+  {
+   "fila": 54,
+   "fecha": "2026-11-03",
+   "concepto": "5 bolsas de lactancia",
+   "tipo": "Concentrado",
+   "socio": null,
+   "nota": "[dashboard: Wiliam]",
+   "cantidad": null,
+   "precio": null,
+   "entrada": 0,
+   "salida": 3500,
+   "cat": "Concentrado"
+  },
+  {
+   "fila": 55,
+   "fecha": "2026-11-03",
+   "concepto": "7 bolsas que le encargue al de encomiendas.",
+   "tipo": "Flete / comisión",
+   "socio": null,
+   "nota": "[dashboard: Wiliam]",
+   "cantidad": null,
+   "precio": null,
+   "entrada": 0,
+   "salida": 70,
+   "cat": "Flete / comisión"
+  },
+  {
+   "fila": 56,
+   "fecha": "2026-11-03",
+   "concepto": "7 bolsas que me trajo Roel Cordoba",
+   "tipo": "Flete / comisión",
+   "socio": null,
+   "nota": "[dashboard: Wiliam]",
+   "cantidad": null,
+   "precio": null,
+   "entrada": 0,
+   "salida": 490,
+   "cat": "Flete / comisión"
   }
  ],
  "aportes": [
