@@ -1,10 +1,10 @@
 {
- "generado": "2026-11-08T02:08:14.554Z",
+ "generado": "2026-11-09T20:58:15.244Z",
  "fuente": "OneDrive · Proyecto_Porcino",
  "archivos": [
   {
    "nombre": "Granja_Porcina_Facil.xlsx",
-   "modificado": "2026-11-04T01:00:36Z",
+   "modificado": "2026-11-09T20:42:23Z",
    "por": "Guest Contributor"
   }
  ],
@@ -622,58 +622,19 @@
   },
   {
    "fila": 52,
-   "fecha": "2026-10-31",
-   "concepto": "7 bolsas",
-   "tipo": "flete",
+   "fecha": "2026-11-03",
+   "concepto": "5 bolsas de lactancia",
+   "tipo": "Concentrado",
    "socio": null,
-   "nota": null,
+   "nota": "[dashboard: Wiliam]",
    "cantidad": null,
    "precio": null,
    "entrada": 0,
-   "salida": 490,
-   "cat": "flete"
+   "salida": 3500,
+   "cat": "Concentrado"
   },
   {
    "fila": 53,
-   "fecha": "2026-10-31",
-   "concepto": "5 bolsas de lactancia",
-   "tipo": "Concentrado",
-   "socio": null,
-   "nota": null,
-   "cantidad": null,
-   "precio": null,
-   "entrada": 0,
-   "salida": 3500,
-   "cat": "Concentrado"
-  },
-  {
-   "fila": 54,
-   "fecha": "2026-11-03",
-   "concepto": "5 bolsas de lactancia",
-   "tipo": "Concentrado",
-   "socio": null,
-   "nota": "[dashboard: Wiliam]",
-   "cantidad": null,
-   "precio": null,
-   "entrada": 0,
-   "salida": 3500,
-   "cat": "Concentrado"
-  },
-  {
-   "fila": 55,
-   "fecha": "2026-11-03",
-   "concepto": "7 bolsas que le encargue al de encomiendas.",
-   "tipo": "Flete / comisión",
-   "socio": null,
-   "nota": "[dashboard: Wiliam]",
-   "cantidad": null,
-   "precio": null,
-   "entrada": 0,
-   "salida": 70,
-   "cat": "Flete / comisión"
-  },
-  {
-   "fila": 56,
    "fecha": "2026-11-03",
    "concepto": "7 bolsas que me trajo Roel Cordoba",
    "tipo": "Flete / comisión",
@@ -684,6 +645,45 @@
    "entrada": 0,
    "salida": 490,
    "cat": "Flete / comisión"
+  },
+  {
+   "fila": 54,
+   "fecha": "2026-11-06",
+   "concepto": "1 bolsa conc. desarrollo",
+   "tipo": "Concentrado",
+   "socio": null,
+   "nota": null,
+   "cantidad": null,
+   "precio": null,
+   "entrada": 0,
+   "salida": 700,
+   "cat": "Concentrado"
+  },
+  {
+   "fila": 55,
+   "fecha": "2026-11-06",
+   "concepto": "1 ACTYL ESPRAY",
+   "tipo": "Sanidad y medicinas",
+   "socio": null,
+   "nota": null,
+   "cantidad": null,
+   "precio": null,
+   "entrada": 0,
+   "salida": 400,
+   "cat": "Sanidad y medicinas"
+  },
+  {
+   "fila": 56,
+   "fecha": "2026-11-07",
+   "concepto": "1 bolsa nutricerdo inicioi",
+   "tipo": "concentrado",
+   "socio": null,
+   "nota": null,
+   "cantidad": null,
+   "precio": null,
+   "entrada": 0,
+   "salida": 695,
+   "cat": "concentrado"
   }
  ],
  "aportes": [
