@@ -1,10 +1,10 @@
 {
- "generado": "2026-11-12T02:43:27.314Z",
+ "generado": "2026-11-12T02:44:32.884Z",
  "fuente": "OneDrive · Proyecto_Porcino",
  "archivos": [
   {
    "nombre": "Granja_Porcina_Facil.xlsx",
-   "modificado": "2026-11-12T00:44:43Z",
+   "modificado": "2026-11-12T02:44:31Z",
    "por": "Guest Contributor"
   }
  ],
@@ -2317,7 +2317,7 @@
   "lechones": 12,
   "precio": 2300,
   "ingresos": null,
-  "costoCerdo": null
+  "costoCerdo": 5000
  },
  "hato": [
   {

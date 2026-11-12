@@ -1,5 +1,43 @@
 [
  {
+  "id": "20261112024237-costo",
+  "creado": "2026-11-12T02:42:37.324Z",
+  "quien": "Laura",
+  "tipo": "parametro",
+  "resumen": "Costo de criar un cerdo de engorde: L 5,000 (total, no por mes)",
+  "aplicado": "2026-11-12T02:44:31+00:00",
+  "estado": "ok",
+  "datos": {
+   "hoja": "Costo lechón",
+   "etiqueta": "Costo total de criar un cerdo de engorde (de nacer a venderse)",
+   "valor": "5000",
+   "nota": "Total por cerdo durante todo el tiempo en la granja, no por mes"
+  },
+  "inicio": "2026-11-12T02:42:37.324Z",
+  "dueno": "Laura",
+  "cambios": [
+   [
+    "Costo lechón",
+    "A25",
+    null,
+    "Costo total de criar un cerdo de engorde (de nacer a venderse)"
+   ],
+   [
+    "Costo lechón",
+    "B25",
+    null,
+    5000
+   ],
+   [
+    "Costo lechón",
+    "C25",
+    null,
+    "Total por cerdo durante todo el tiempo en la granja, no por mes"
+   ]
+  ],
+  "mensaje": "Costo lechón: Costo total de criar un cerdo de engorde (de nacer a venderse) = 5000"
+ },
+ {
   "id": "20261104000204-0wwf3",
   "creado": "2026-11-04T00:02:04.531Z",
   "quien": "Wiliam",
