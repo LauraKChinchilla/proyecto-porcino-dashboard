@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-12T00:45:28.313Z",
+ "generado": "2026-11-12T02:43:27.314Z",
  "fuente": "OneDrive · Proyecto_Porcino",
  "archivos": [
   {
@@ -2316,7 +2316,8 @@
   "total": 16650,
   "lechones": 12,
   "precio": 2300,
-  "ingresos": null
+  "ingresos": null,
+  "costoCerdo": null
  },
  "hato": [
   {
