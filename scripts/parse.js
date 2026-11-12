@@ -398,9 +398,10 @@
       const rows = aoa(XLSX, wsC); const h = findHeader(rows, ['concepto']); const items = []; let lech = null;
       if (h >= 0) for (let r = h + 1; r < rows.length; r++) { const row = rows[r] || []; const l = txt(row[0]); const v = num(row[1]);
         if (!l) continue; if (/costo total/.test(norm(l))) break; if (v) items.push({ concepto: l, total: v }); }
-      for (const row of rows) { if (/lechones por camada/.test(norm((row || [])[0]))) lech = num(row[1]); }
+      let costoCerdo = null;
+      for (const row of rows) { const k = norm((row || [])[0]); if (/lechones por camada/.test(k)) lech = num(row[1]); if (/criar un cerdo/.test(k)) costoCerdo = num(row[1]); }
       const total = items.reduce((a, b) => a + b.total, 0);
-      out.costo = { items, total, lechones: lech || 12, precio: precio || 2300, ingresos: null };
+      out.costo = { items, total, lechones: lech || 12, precio: precio || 2300, ingresos: null, costoCerdo };
     } else out.costo = { items: [], total: 0, lechones: 12, precio: precio || 2300, ingresos: null };
     return out;
   }

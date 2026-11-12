@@ -9,6 +9,7 @@ en capturas.json. Uso:
 """
 import base64, datetime as dt, glob, io, json, os, sys, unicodedata, urllib.request, urllib.error
 from openpyxl import load_workbook
+from openpyxl.styles import Font
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PEND = os.path.join(RAIZ, "pendientes")
@@ -305,24 +306,141 @@ def bodega(wb, d, firma, tabla):
     return f"{'Nueva fila' if nuevo else 'Fila'} {fila} de Bodega: {nombre} = {cant}"
 
 
+def parametro(wb, d, firma):
+    """Escribe un valor con etiqueta en una hoja (por ejemplo, el costo por cerdo en 'Costo lechón')."""
+    ws = wb[d["hoja"]]
+    etiqueta = d["etiqueta"]
+    fila = None
+    for r in range(1, ws.max_row + 1):
+        if norm(ws.cell(row=r, column=1).value) == norm(etiqueta):
+            fila = r
+            break
+    if fila is None:
+        fila = ws.max_row + 2
+        ws.cell(row=fila, column=1, value=etiqueta).font = Font(name="Arial", size=11, bold=True)
+    c = ws.cell(row=fila, column=2, value=num(d["valor"]))
+    c.number_format = 'L #,##0;[Red]-L #,##0;"-"'
+    c.font = Font(name="Arial", size=12, bold=True, color="1F1F1F")
+    if d.get("nota"):
+        ws.cell(row=fila, column=3, value=d["nota"]).font = Font(name="Arial", size=10, italic=True, color="7F7F7F")
+    return f"{d['hoja']}: {etiqueta} = {d['valor']}"
+
+
 ACCIONES = {
     "dinero": dinero, "monta": monta, "parto": parto, "muerte_lechones": muerte_lechones,
     "venta_lechones": venta_lechones, "hato_alta": hato_alta, "hato_baja": hato_baja, "engorde": engorde,
     "vacuna": vacuna, "medicina": lambda wb, d, f: bodega(wb, d, f, "medicina"),
     "concentrado": lambda wb, d, f: bodega(wb, d, f, "concentrado"),
+    "parametro": parametro,
 }
+VENTANA = 60 * 60 + 5 * 60   # 1 hora para corregir (+5 min de margen por la demora en aplicar)
 
 
-def aplicar(contenido, capturas):
+# ---------- registro de cambios celda por celda (para poder corregir o anular) ----------
+def ser(v):
+    if isinstance(v, dt.datetime):
+        return {"$d": v.replace(microsecond=0).isoformat()}
+    if isinstance(v, dt.date):
+        return {"$d": dt.datetime(v.year, v.month, v.day).isoformat()}
+    return v
+
+
+def deser(v):
+    if isinstance(v, dict) and "$d" in v:
+        return dt.datetime.fromisoformat(v["$d"])
+    return v
+
+
+def foto(wb):
+    out = {}
+    for ws in wb.worksheets:
+        for row in ws.iter_rows():
+            for c in row:
+                if c.value is not None:
+                    out[(ws.title, c.coordinate)] = ser(c.value)
+    return out
+
+
+def diferencias(antes, despues):
+    cambios = []
+    for k in set(antes) | set(despues):
+        a, b = antes.get(k), despues.get(k)
+        if a != b:
+            cambios.append([k[0], k[1], a, b])
+    return sorted(cambios)
+
+
+def deshacer(wb, cambios):
+    """Devuelve las celdas a como estaban. Si alguien ya las cambió a mano, no toca nada."""
+    choques = [f"{h}!{c}" for h, c, viejo, nuevo in cambios if ser(wb[h][c].value) != nuevo]
+    if choques:
+        raise ValueError("Ese registro ya se modificó directo en el Excel (" + ", ".join(choques[:4]) +
+                         "). Corrígelo en el Excel.")
+    for h, c, viejo, nuevo in cambios:
+        wb[h][c].value = deser(viejo)
+
+
+def minutos(a, b):
+    return (dt.datetime.fromisoformat(b.replace("Z", "+00:00")) - dt.datetime.fromisoformat(a.replace("Z", "+00:00"))).total_seconds()
+
+
+def admins():
+    try:
+        with open(os.path.join(RAIZ, "admin", "config.json"), encoding="utf-8") as f:
+            cfg = json.load(f)
+        if cfg.get("v") == 2:
+            return {u["nombre"] for u in cfg["usuarios"] if u.get("admin")}
+        return {"Laura"}
+    except Exception:
+        return {"Laura"}
+
+
+def aplicar(contenido, capturas, log):
     wb = load_workbook(io.BytesIO(contenido))
+    porid = {e.get("id"): e for e in log}
+    jefes = admins()
     res = []
     for cap in capturas:
         firma = f"[dashboard: {cap.get('quien') or 'sin nombre'}]"
+        r = {"estado": "ok"}
         try:
-            msg = ACCIONES[cap["tipo"]](wb, cap["datos"], firma)
-            res.append({"estado": "ok", "mensaje": msg})
-        except Exception as e:  # una captura mala no bloquea las demás
-            res.append({"estado": "error", "mensaje": str(e)})
+            antes = foto(wb)
+            if cap["tipo"] in ("editar", "anular"):
+                obj = porid.get(cap["datos"].get("objetivo"))
+                if not obj:
+                    raise ValueError("No encontré el registro que se quiere corregir")
+                if obj.get("estado") != "ok":
+                    raise ValueError("Ese registro ya fue corregido o anulado")
+                inicio = obj.get("inicio") or obj.get("creado")
+                if minutos(inicio, cap.get("creado")) > VENTANA:
+                    raise ValueError("Ya pasó más de 1 hora desde que se agregó; corrígelo en el Excel")
+                if not obj.get("cambios"):
+                    raise ValueError("Ese registro no se puede corregir desde la pantalla; corrígelo en el Excel")
+                dueno = obj.get("dueno") or obj.get("quien")
+                if cap.get("quien") != dueno and cap.get("quien") not in jefes:
+                    raise ValueError(f"Solo {dueno} o un administrador pueden corregirlo")
+                deshacer(wb, obj["cambios"])
+                medio = foto(wb)
+                if cap["tipo"] == "editar":
+                    tipo = cap["datos"]["tipo"]
+                    msg = ACCIONES[tipo](wb, cap["datos"]["datos"], firma + " (corregido)")
+                    r.update(tipo=tipo, datos=cap["datos"]["datos"], corrige=obj["id"], inicio=inicio, dueno=dueno,
+                             cambios=diferencias(medio, foto(wb)), mensaje="Corregido: " + msg)
+                    obj["estado"] = "corregido"
+                else:
+                    r.update(anula=obj["id"], mensaje="Registro anulado en el Excel")
+                    obj["estado"] = "anulado"
+                obj["reemplazado_por"] = cap.get("id")
+            else:
+                msg = ACCIONES[cap["tipo"]](wb, cap["datos"], firma)
+                r.update(datos=cap["datos"], inicio=cap.get("creado"), dueno=cap.get("quien"), cambios=diferencias(antes, foto(wb)), mensaje=msg)
+        except Exception as e:  # una captura mala no bloquea las demás y no deja nada a medias
+            ahora_f = foto(wb)
+            for k in set(antes) | set(ahora_f):
+                if antes.get(k) != ahora_f.get(k):
+                    wb[k[0]][k[1]].value = deser(antes.get(k))
+            r = {"estado": "error", "mensaje": str(e)}
+        res.append(r)
     try:
         wb.calculation.fullCalcOnLoad = True
     except Exception:
@@ -370,12 +488,18 @@ def main():
             print("Captura ilegible", a, e)
             capturas.append({"_archivo": a, "tipo": "ilegible", "datos": {}, "id": os.path.basename(a)})
     capturas.sort(key=lambda c: c.get("creado", ""))
-    validas = [c for c in capturas if c["tipo"] in ACCIONES]
+    conocidas = set(ACCIONES) | {"editar", "anular"}
+    validas = [c for c in capturas if c["tipo"] in conocidas]
+    try:
+        with open(LOG, encoding="utf-8") as f:
+            log = json.load(f)
+    except Exception:
+        log = []
 
     if "--local" in sys.argv:
         ruta = sys.argv[sys.argv.index("--local") + 1]
         with open(ruta, "rb") as f:
-            nuevo, res = aplicar(f.read(), validas)
+            nuevo, res = aplicar(f.read(), validas, log)
         with open(ruta.replace(".xlsx", "_aplicado.xlsx"), "wb") as f:
             f.write(nuevo)
     else:
@@ -383,31 +507,37 @@ def main():
             H, item = onedrive()
             drive, iid = item["parentReference"]["driveId"], item["id"]
             _, contenido = http(item["@content.downloadUrl"])
-            nuevo, res = aplicar(contenido, validas)
+            copia = json.loads(json.dumps(log))   # cada intento parte del registro sin tocar
+            nuevo, res = aplicar(contenido, validas, copia)
             try:
                 http(f"{API}/drives/{drive}/items/{iid}/content", "PUT", nuevo,
                      {**H, "If-Match": item["eTag"], "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"})
+                log = copia
                 break
             except urllib.error.HTTPError as e:
                 if e.code in (409, 412) and intento < 3:
                     print("El Excel cambió mientras se aplicaba; reintento…")
                     continue
                 raise
-    # registro
-    try:
-        with open(LOG, encoding="utf-8") as f:
-            log = json.load(f)
-    except Exception:
-        log = []
+        else:
+            return
     ahora = dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
     it = iter(res)
     for c in capturas:
-        r = next(it) if c["tipo"] in ACCIONES else {"estado": "error", "mensaje": "Tipo de captura desconocido"}
-        log.insert(0, {"id": c.get("id"), "creado": c.get("creado"), "quien": c.get("quien"), "tipo": c["tipo"],
-                       "resumen": c.get("resumen"), "aplicado": ahora, **r})
+        r = next(it) if c["tipo"] in conocidas else {"estado": "error", "mensaje": "Tipo de captura desconocido"}
+        entrada = {"id": c.get("id"), "creado": c.get("creado"), "quien": c.get("quien"), "tipo": c["tipo"],
+                   "resumen": c.get("resumen"), "aplicado": ahora, **r}
+        if entrada["tipo"] == "editar" and r.get("tipo"):
+            entrada["tipo"] = r["tipo"]
+        log.insert(0, entrada)
         print(c["tipo"], "→", r["estado"], r["mensaje"])
         if "--local" not in sys.argv:
             os.remove(c["_archivo"])
+    # Las celdas cambiadas solo se guardan mientras se pueden corregir (para que el archivo no crezca)
+    for e in log:
+        ini = e.get("inicio") or e.get("creado")
+        if e.get("cambios") and ini and minutos(ini, ahora) > VENTANA + 3600:
+            e.pop("cambios", None)
     with open(LOG, "w", encoding="utf-8") as f:
         json.dump(log[:300], f, ensure_ascii=False, indent=1)
 
