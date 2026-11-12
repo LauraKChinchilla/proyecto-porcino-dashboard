@@ -131,6 +131,7 @@
     const def = C.gastoMes - C.ventaMes;
     const precio = (D.costo && D.costo.precio) || 2300;
     const costoU = D.costo && D.costo.lechones ? D.costo.total / D.costo.lechones : null;
+    const costoCerdo = D.costo && D.costo.costoCerdo ? D.costo.costoCerdo : null;
     const kpis = [
       ['Capital total de socios', L(cap), `Wilian ${L(C.soc.Wilian.total)} · Erick ${L(C.soc.Erick.total)}`, Math.abs(dif) < 1 ? ['good', '✓ Igualados'] : ['warn', '! Diferencia ' + L(Math.abs(dif))]],
       ['Saldo en caja', L(C.saldo), `Entradas ${L(C.ent)} − salidas ${L(C.sal)}`, C.saldo < 0 ? ['bad', '▼ Negativo'] : null],
@@ -139,7 +140,7 @@
       ['Resultado operativo', L(C.ventas - C.sal), `Ventas − gastos en ${C.dias} días`, C.ventas - C.sal < 0 ? ['bad', '▼ Déficit'] : ['good', '▲ Superávit']],
       ['Cobertura de caja', def > 0 ? dec(C.saldo / def) + ' meses' : 'Sin déficit', 'Al ritmo actual de gasto y venta', def > 0 && C.saldo / def < 2 ? ['warn', '! Ajustado'] : null],
       ['Listos para vender', `${C.listos} lechones`, `≈ ${L(C.listos * precio)} a ${L(precio)} · ${C.lactando} más en lactancia`, C.listos ? ['good', '● Destetados'] : null],
-      ...(C.engorde.length ? [['Cerdos de engorde', `${C.engQuedan} en granja`, C.engValor ? `≈ ${L(C.engValor)} a precio estimado` : 'Sin precio estimado', ['warn', '! Confirmar conteo']]] : []),
+      ...(C.engorde.length ? [['Cerdos de engorde', `${C.engQuedan} en granja`, C.engValor ? `≈ ${L(C.engValor)} a precio estimado` + (costoCerdo ? ` · ganancia ≈ ${L(C.engValor - C.engQuedan * costoCerdo)}` : '') : 'Sin precio estimado', ['warn', '! Confirmar conteo']]] : []),
       ['Mortalidad de lechones', pct(C.mort), `${C.bajDest} muertes de ${C.vivDest} vivos (camadas destetadas)`, C.mort > 0.2 ? ['bad', '▲ Alta'] : ['good', '✓ Aceptable']],
       ['Margen por lechón', costoU != null ? L(precio - costoU) : '—', costoU != null ? `Costo ${L(costoU)} · precio ${L(precio)}` : 'Sin hoja de costo', costoU != null && precio > costoU ? ['good', '✓ Positivo'] : null],
     ];
@@ -200,11 +201,12 @@
       $('hatoCap').textContent = C.hato.length ? `${act.filter(h => !/verraco/i.test(h.tipo)).length} cerdas y ${act.filter(h => /verraco/i.test(h.tipo)).length} verraco(s) activos · ${C.hato.length - act.length} vendidos, muertos o descartados` : 'Sin registros en la hoja Hato';
       $('hatoTbl').innerHTML = '<thead><tr><th>Código</th><th>Tipo</th><th>Estado</th><th class="num">Partos</th><th class="num">Lechones vivos</th><th>Último parto</th><th>Próximo parto</th></tr></thead><tbody>' +
         C.hato.map(h => `<tr><td><b>${esc(h.codigo)}</b></td><td class="muted">${esc(h.tipo)}</td><td>${/^activ/i.test(h.estado) ? '<span class="badge good">' + esc(h.estado) + '</span>' : '<span class="badge bad">' + esc(h.estado) + (h.salida ? ' · ' + fmtDs(h.salida) : '') + '</span>'}</td><td class="num">${/verraco/i.test(h.tipo) ? '' : h.partos}</td><td class="num">${/verraco/i.test(h.tipo) ? '' : h.vivos}</td><td>${h.ultimo ? fmtDs(h.ultimo) : ''}</td><td>${h.proximo ? fmtDs(h.proximo) : ''}</td></tr>`).join('') + '</tbody>';
-      $('engTbl').innerHTML = C.engorde.length ? '<thead><tr><th>Lote</th><th class="num">Entraron</th><th class="num">Vendidos</th><th class="num">Muertos</th><th class="num">Quedan</th><th class="num">Valor estimado</th></tr></thead><tbody>' +
-        C.engorde.map(l => `<tr><td>${esc(l.lote)}</td><td class="num">${l.entraron}</td><td class="num">${l.vendidos}</td><td class="num">${l.muertos}</td><td class="num"><b>${l.quedan}</b></td><td class="num">${l.precio ? L(l.quedan * l.precio) : '—'}</td></tr>`).join('') +
-        `<tr class="tot"><td>Total</td><td></td><td></td><td></td><td class="num">${C.engQuedan}</td><td class="num">${C.engValor ? L(C.engValor) : '—'}</td></tr></tbody>` : '<tbody><tr><td class="muted">Sin movimientos en la hoja Engorde.</td></tr></tbody>';
+      const cc = (DATA.costo && DATA.costo.costoCerdo) || null;
+      $('engTbl').innerHTML = C.engorde.length ? `<thead><tr><th>Lote</th><th class="num">Entraron</th><th class="num">Vendidos</th><th class="num">Muertos</th><th class="num">Quedan</th><th class="num">Valor estimado</th>${cc ? '<th class="num">Ganancia estimada</th>' : ''}</tr></thead><tbody>` +
+        C.engorde.map(l => `<tr><td>${esc(l.lote)}</td><td class="num">${l.entraron}</td><td class="num">${l.vendidos}</td><td class="num">${l.muertos}</td><td class="num"><b>${l.quedan}</b></td><td class="num">${l.precio ? L(l.quedan * l.precio) : '—'}</td>${cc ? `<td class="num">${l.precio ? L(l.quedan * (l.precio - cc)) : '—'}</td>` : ''}</tr>`).join('') +
+        `<tr class="tot"><td>Total</td><td></td><td></td><td></td><td class="num">${C.engQuedan}</td><td class="num">${C.engValor ? L(C.engValor) : '—'}</td>${cc ? `<td class="num">${C.engValor ? L(C.engValor - C.engQuedan * cc) : '—'}</td>` : ''}</tr></tbody>` : '<tbody><tr><td class="muted">Sin movimientos en la hoja Engorde.</td></tr></tbody>';
       const sinMuertes = C.engorde.some(l => !l.muertos);
-      $('engCallout').innerHTML = C.engorde.length ? `Según la hoja Engorde quedan <b>${C.engQuedan} cerdos</b>${C.engValor ? `, unos <b>${L(C.engValor)}</b> al precio estimado` : ''}. ${sinMuertes ? 'Todavía no hay muertes anotadas, así que este número puede estar alto: confírmenlo con un conteo. ' : ''}No se incluyen en la proyección de caja porque no hay fecha de venta.` : '';
+      $('engCallout').innerHTML = C.engorde.length ? `Según la hoja Engorde quedan <b>${C.engQuedan} cerdos</b>${C.engValor ? `, unos <b>${L(C.engValor)}</b> al precio estimado` : ''}. ${sinMuertes ? 'Todavía no hay muertes anotadas, así que este número puede estar alto: confírmenlo con un conteo. ' : ''}No se incluyen en la proyección de caja porque no hay fecha de venta.` + (cc ? `<br><br>Criar un cerdo de engorde, desde que nace hasta que se vende, cuesta <b>${L(cc)} en total</b> (no por mes)${C.engorde.some(l => l.precio) ? `; vendiéndolo a ${L(C.engorde.find(l => l.precio).precio)} deja unos <b>${L(C.engorde.find(l => l.precio).precio - cc)} por cerdo</b>` : ''}.` : '') : '';
     }
 
     // Calendario

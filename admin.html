@@ -216,6 +216,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid color-mix(in oklab,var
   </div>
 
   <div class="card">
+    <div class="callout" id="editBanner" hidden style="margin-bottom:16px;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><span id="editTxt"></span><button class="btn sec" type="button" id="cancelEdit" style="min-height:34px;padding:6px 12px;font-size:13px">Cancelar corrección</button></div>
     <!-- DINERO -->
     <form data-panel="dinero" data-tipo="dinero">
       <h3>Gasto, venta o aporte</h3><p class="cap">Una fila nueva en la hoja Dinero.</p>
@@ -428,7 +429,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid color-mix(in oklab,var
   <section style="margin-top:28px">
     <div class="grid two">
       <div class="card"><h3>Por pasar al Excel</h3><p class="cap">Se aplican en 1–3 minutos. Si te equivocaste, bórralo antes.</p><div class="list" id="pend"><p class="muted" style="font-size:13px">Cargando…</p></div></div>
-      <div class="card"><h3>Ya en el Excel</h3><p class="cap">Últimas capturas aplicadas</p><div class="list" id="hechas"><p class="muted" style="font-size:13px">Cargando…</p></div></div>
+      <div class="card"><h3>Ya en el Excel</h3><p class="cap">Últimas capturas aplicadas. Puedes corregir o anular las tuyas durante 1 hora.</p><div class="list" id="hechas"><p class="muted" style="font-size:13px">Cargando…</p></div></div>
     </div>
   </section>
 </main>
@@ -437,6 +438,6 @@ input:focus,select:focus,textarea:focus{outline:2px solid color-mix(in oklab,var
 <footer style="margin-top:32px">Granja Porcina · registro de datos</footer>
 </div>
 <div class="toast" id="toast" role="status"></div>
-<script src="admin.js?v=3"></script>
+<script src="admin.js?v=4"></script>
 </body>
 </html>

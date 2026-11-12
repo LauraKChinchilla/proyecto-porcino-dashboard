@@ -148,14 +148,61 @@
   });
 
   /* ---------- pestañas ---------- */
-  qsa('#tabs button').forEach(b => b.addEventListener('click', () => {
-    qsa('#tabs button').forEach(x => x.setAttribute('aria-pressed', x === b));
-    qsa('[data-panel]').forEach(p => p.hidden = p.dataset.panel !== b.dataset.t);
-  }));
+  function irA(tab, sub) {
+    qsa('#tabs button').forEach(x => x.setAttribute('aria-pressed', x.dataset.t === tab));
+    qsa('[data-panel]').forEach(p => p.hidden = p.dataset.panel !== tab);
+    if (sub) { const seg = qs(`[data-panel=${tab}] .seg.sub`); qsa('button', seg).forEach(x => x.setAttribute('aria-pressed', x.dataset.s === sub)); qsa('[data-sp]', seg.parentElement).forEach(f => f.hidden = f.dataset.sp !== sub); }
+  }
+  qsa('#tabs button').forEach(b => b.addEventListener('click', () => { if (EDIT) cancelarEdicion(); irA(b.dataset.t); }));
   qsa('.seg.sub').forEach(seg => qsa('button', seg).forEach(b => b.addEventListener('click', () => {
+    if (EDIT) cancelarEdicion();
     qsa('button', seg).forEach(x => x.setAttribute('aria-pressed', x === b));
     qsa('[data-sp]', seg.parentElement).forEach(f => f.hidden = f.dataset.sp !== b.dataset.s);
   })));
+
+  /* ---------- corregir o anular (hasta 1 hora después) ---------- */
+  const VENTANA_MIN = 60;
+  const DONDE = { dinero: ['dinero'], monta: ['cerdas', 'monta'], parto: ['cerdas', 'parto'], muerte_lechones: ['cerdas', 'muerte_lechones'], venta_lechones: ['cerdas', 'venta_lechones'],
+    hato_alta: ['hato', 'hato_alta'], hato_baja: ['hato', 'hato_baja'], engorde: ['hato', 'engorde'], vacuna: ['sanidad', 'vacuna'], medicina: ['sanidad', 'medicina'], concentrado: ['sanidad', 'concentrado'] };
+  let EDIT = null, LOG = [], OBJ_PEND = new Set();
+  const minutosDesde = iso => (Date.now() - new Date(iso)) / 60000;
+  function editable(i) {
+    if (i.estado !== 'ok' || !i.cambios || !i.cambios.length || !DONDE[i.tipo] || !USER) return false;
+    const dueno = i.dueno || i.quien;
+    return minutosDesde(i.inicio || i.creado) < VENTANA_MIN && (dueno === USER.nombre || USER.admin) && !OBJ_PEND.has(i.id);
+  }
+  function poner(f, k, v) {
+    const el = f.elements[k]; if (!el || v == null) return;
+    if (el instanceof RadioNodeList && !(el instanceof HTMLSelectElement)) { [...el].forEach(r => r.checked = r.value === v); return; }
+    if (el.type === 'checkbox') { el.checked = !!v; return; }
+    if (el.tagName === 'SELECT' && ![...el.options].some(o => o.value === String(v))) el.insertAdjacentHTML('beforeend', `<option value="${esc(v)}">${esc(v)}</option>`);
+    el.value = v;
+  }
+  function editar(i) {
+    const [tab, sub] = DONDE[i.tipo]; irA(tab, sub);
+    const f = qs(`form[data-tipo=${i.tipo}]`), d = { ...i.datos };
+    f.reset(); qsa('input[type=date]', f).forEach(x => x.value = '');
+    if (i.tipo === 'dinero') { poner(f, 'movimiento', d.movimiento); tipoDinero(); }
+    if (i.tipo === 'medicina' && d.vence) d.vence = d.vence.slice(0, 7);
+    if (i.tipo === 'venta_lechones') d.conDinero = !!d.monto;
+    Object.entries(d).forEach(([k, v]) => poner(f, k, v));
+    if (i.tipo === 'dinero') tipoDinero();
+    if (f.monto) f.monto.dataset.touched = 1;
+    f.dispatchEvent(new Event('change', { bubbles: true }));
+    EDIT = { id: i.id, tipo: i.tipo, resumen: i.resumen, form: f };
+    const ban = $('editBanner'); ban.hidden = false;
+    $('editTxt').innerHTML = `Corrigiendo: <b>${esc(i.resumen)}</b> (de ${esc(i.dueno || i.quien)}). Cambia lo necesario y guarda.`;
+    qs('button[type=submit]', f).textContent = 'Guardar corrección';
+    ban.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  function cancelarEdicion() {
+    if (!EDIT) return;
+    const b = qs('button[type=submit]', EDIT.form); b.textContent = b.dataset.txt || 'Guardar';
+    EDIT.form.reset(); qsa('input[type=date]', EDIT.form).forEach(i => { if (i.name !== 'refuerzo' && i.name !== 'vence') i.value = hoy(); });
+    if (EDIT.tipo === 'dinero') tipoDinero();
+    EDIT = null; $('editBanner').hidden = true; llenarListas();
+  }
+  qsa('form[data-tipo] button[type=submit]').forEach(b => b.dataset.txt = b.textContent);
 
   /* ---------- listas desde data.json ---------- */
   const TIPOS = { Sale: ['Concentrado', 'Sanidad y medicinas', 'Materiales y mantenimiento', 'Flete / comisión', 'Mano de obra', 'Animales', 'Servicios', 'Otro gasto'],
@@ -252,11 +299,14 @@
     if (tipo === 'dinero' && d.tipo !== 'Aporte de socio') { delete d.socio; delete d.tipoAporte; }
     const btn = qs('button[type=submit]', f); btn.disabled = true;
     const ahora = new Date(), id = `${ahora.toISOString().replace(/[-:T]/g, '').slice(0, 14)}-${Math.random().toString(36).slice(2, 7)}`;
-    const cap = { id, creado: ahora.toISOString(), quien: quien(), tipo, datos: d, resumen: resumen(tipo, d) };
+    const cap = EDIT && EDIT.tipo === tipo
+      ? { id, creado: ahora.toISOString(), quien: quien(), tipo: 'editar', datos: { objetivo: EDIT.id, tipo, datos: d }, resumen: 'Corrección: ' + resumen(tipo, d) }
+      : { id, creado: ahora.toISOString(), quien: quien(), tipo, datos: d, resumen: resumen(tipo, d) };
     try {
       const r = await gh(`/contents/pendientes/${id}.json`, { method: 'PUT', body: JSON.stringify({ message: `Captura: ${cap.resumen}`.slice(0, 120), content: utf8b64(JSON.stringify(cap, null, 1)) }) });
       if (!r.ok) throw new Error('No se pudo guardar');
-      toast('Guardado ✓ Se pasa al Excel en 1–3 minutos');
+      toast(cap.tipo === 'editar' ? 'Corrección guardada ✓ Se aplica en 1–3 minutos' : 'Guardado ✓ Se pasa al Excel en 1–3 minutos');
+      if (cap.tipo === 'editar') { cancelarEdicion(); }
       const keep = ['fecha', 'movimiento', 'cerda', 'lote', 'precio', 'conDinero', 'modo'];
       qsa('input,select,textarea', f).forEach(i => { if (!keep.includes(i.name) && i.type !== 'radio' && i.type !== 'checkbox' && i.tagName !== 'SELECT') i.value = ''; });
       delete (f.monto || {}).dataset?.touched;
@@ -273,15 +323,40 @@
       const arr = r.ok ? (await r.json()).filter(x => x.name.endsWith('.json')) : [];
       const items = await Promise.all(arr.map(async x => { try { const j = await (await gh('/contents/' + x.path, { headers: { Accept: 'application/vnd.github.raw+json' } })).json(); return { ...j, sha: x.sha, path: x.path }; } catch (e) { return { id: x.name, resumen: x.name, sha: x.sha, path: x.path }; } }));
       items.sort((a, b) => (a.creado || '') < (b.creado || '') ? 1 : -1);
+      OBJ_PEND = new Set(items.filter(i => i.datos && i.datos.objetivo).map(i => i.datos.objetivo));
       $('pend').innerHTML = items.length ? items.map(i => `<div class="item"><div>${esc(i.resumen)}<div class="m">${esc(i.quien || '')} · ${i.creado ? new Date(i.creado).toLocaleString('es-HN', { dateStyle: 'short', timeStyle: 'short' }) : ''}</div></div><button type="button" data-del="${esc(i.path)}" data-sha="${esc(i.sha)}">Borrar</button></div>`).join('') : '<p class="muted" style="font-size:13px">Nada pendiente.</p>';
     } catch (e) { $('pend').innerHTML = '<p class="muted" style="font-size:13px">No se pudo consultar.</p>'; }
     try {
       const r = await gh('/contents/capturas.json', { headers: { Accept: 'application/vnd.github.raw+json' } });
       const log = r.ok ? await r.json() : [];
-      $('hechas').innerHTML = log.length ? log.slice(0, 15).map(i => `<div class="item"><div>${i.estado === 'ok' ? '✓' : '<b style="color:var(--bad)">✗</b>'} ${esc(i.resumen || i.tipo)}<div class="m">${esc(i.quien || '')} · ${new Date(i.aplicado).toLocaleString('es-HN', { dateStyle: 'short', timeStyle: 'short' })}${i.estado === 'ok' ? '' : ' · ' + esc(i.mensaje)}</div></div></div>`).join('') : '<p class="muted" style="font-size:13px">Todavía no hay capturas.</p>';
+      LOG = log; pintarHechas();
     } catch (e) { }
   }
+  function pintarHechas() {
+    const icono = i => i.estado === 'ok' ? '✓' : i.estado === 'corregido' ? '✎' : i.estado === 'anulado' ? '⊘' : '<b style="color:var(--bad)">✗</b>';
+    const nota = i => i.estado === 'ok' ? '' : i.estado === 'corregido' ? ' · corregido después' : i.estado === 'anulado' ? ' · anulado' : ' · ' + esc(i.mensaje);
+    $('hechas').innerHTML = LOG.length ? LOG.slice(0, 20).map(i => {
+      const ed = editable(i), resta = Math.max(1, Math.ceil(VENTANA_MIN - minutosDesde(i.inicio || i.creado)));
+      return `<div class="item"><div style="${i.estado === 'anulado' || i.estado === 'corregido' ? 'opacity:.6' : ''}">${icono(i)} ${esc(i.resumen || i.tipo)}<div class="m">${esc(i.quien || '')} · ${new Date(i.aplicado).toLocaleString('es-HN', { dateStyle: 'short', timeStyle: 'short' })}${nota(i)}${ed ? ` · se puede corregir ${resta} min más` : ''}</div></div>${ed ? `<div style="display:flex;gap:6px;flex-shrink:0"><button type="button" data-editar="${esc(i.id)}" style="color:var(--text)">Editar</button><button type="button" data-anular="${esc(i.id)}">Anular</button></div>` : ''}</div>`;
+    }).join('') : '<p class="muted" style="font-size:13px">Todavía no hay capturas.</p>';
+  }
+  setInterval(() => { if (LOG.length) pintarHechas(); }, 30000);
+  $('cancelEdit').addEventListener('click', cancelarEdicion);
   document.addEventListener('click', async e => {
+    const be = e.target.closest('[data-editar]');
+    if (be) { const i = LOG.find(x => x.id === be.dataset.editar); if (i && editable(i)) editar(i); return; }
+    const ba = e.target.closest('[data-anular]');
+    if (ba) {
+      const i = LOG.find(x => x.id === ba.dataset.anular); if (!i || !editable(i)) return;
+      if (!ba.dataset.ok) { ba.dataset.ok = 1; ba.textContent = '¿Seguro?'; setTimeout(() => { delete ba.dataset.ok; ba.textContent = 'Anular'; }, 4000); return; }
+      ba.disabled = true;
+      const ahora = new Date(), id = `${ahora.toISOString().replace(/[-:T]/g, '').slice(0, 14)}-${Math.random().toString(36).slice(2, 7)}`;
+      const cap = { id, creado: ahora.toISOString(), quien: quien(), tipo: 'anular', datos: { objetivo: i.id }, resumen: 'Anular: ' + (i.resumen || i.tipo) };
+      try { const r = await gh(`/contents/pendientes/${id}.json`, { method: 'PUT', body: JSON.stringify({ message: cap.resumen.slice(0, 120), content: utf8b64(JSON.stringify(cap, null, 1)) }) });
+        if (!r.ok) throw new Error(); toast('Se anulará en el Excel en 1–3 minutos'); }
+      catch (err) { toast('No se pudo anular; inténtalo de nuevo', true); }
+      refrescar(); return;
+    }
     const b = e.target.closest('[data-del]'); if (!b) return;
     b.disabled = true;
     try { const r = await gh('/contents/' + b.dataset.del, { method: 'DELETE', body: JSON.stringify({ message: 'Borrar captura', sha: b.dataset.sha }) });
