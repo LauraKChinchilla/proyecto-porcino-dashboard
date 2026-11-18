@@ -1,10 +1,10 @@
 {
- "generado": "2026-11-18T00:32:02.459Z",
+ "generado": "2026-11-18T00:55:05.720Z",
  "fuente": "OneDrive · Proyecto_Porcino",
  "archivos": [
   {
    "nombre": "Granja_Porcina_Facil.xlsx",
-   "modificado": "2026-11-18T00:31:43Z",
+   "modificado": "2026-11-18T00:54:17Z",
    "por": "Guest Contributor"
   }
  ],
@@ -1719,15 +1719,6 @@
  ],
  "celos": [
   {
-   "cerda": "03",
-   "verraco": null,
-   "monta": "2026-07-20",
-   "partoEsperado": "2026-11-11",
-   "destete": null,
-   "proximaMonta": null,
-   "celo2": null
-  },
-  {
    "cerda": "2804",
    "verraco": null,
    "monta": "2026-09-14",
@@ -2075,6 +2066,19 @@
    "obs": null,
    "destete": null,
    "proximaMonta": null
+  },
+  {
+   "cerda": "03",
+   "fecha": "2026-11-11",
+   "monta": "2026-07-20",
+   "total": 5,
+   "vivos": 5,
+   "muertos": null,
+   "bajas": 1,
+   "peso": null,
+   "obs": null,
+   "destete": null,
+   "proximaMonta": null
   }
  ],
  "lechones": [
@@ -2153,6 +2157,17 @@
    "comentario": null,
    "vivos": 6,
    "muertes": 2,
+   "ventas": 0
+  },
+  {
+   "fila": 12,
+   "fecha": "2026-11-11",
+   "cerdas": [
+    "03"
+   ],
+   "comentario": null,
+   "vivos": 5,
+   "muertes": 1,
    "ventas": 0
   }
  ],
