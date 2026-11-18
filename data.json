@@ -1,10 +1,10 @@
 {
- "generado": "2026-11-18T00:55:05.720Z",
+ "generado": "2026-11-18T00:56:08.592Z",
  "fuente": "OneDrive · Proyecto_Porcino",
  "archivos": [
   {
    "nombre": "Granja_Porcina_Facil.xlsx",
-   "modificado": "2026-11-18T00:54:17Z",
+   "modificado": "2026-11-18T00:55:40Z",
    "por": "Guest Contributor"
   }
  ],
@@ -1829,8 +1829,8 @@
   {
    "cerda": "04",
    "verraco": null,
-   "monta": "2026-11-22",
-   "partoEsperado": "2027-03-16",
+   "monta": "2026-11-15",
+   "partoEsperado": "2027-03-09",
    "destete": null,
    "proximaMonta": null,
    "celo2": null
