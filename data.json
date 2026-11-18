@@ -1,10 +1,10 @@
 {
- "generado": "2026-11-18T00:29:54.379Z",
+ "generado": "2026-11-18T00:30:58.079Z",
  "fuente": "OneDrive · Proyecto_Porcino",
  "archivos": [
   {
    "nombre": "Granja_Porcina_Facil.xlsx",
-   "modificado": "2026-11-18T00:29:31Z",
+   "modificado": "2026-11-18T00:30:44Z",
    "por": "Guest Contributor"
   }
  ],
@@ -695,6 +695,19 @@
    "cantidad": null,
    "precio": null,
    "entrada": 2300,
+   "salida": 0,
+   "cat": "Ventas"
+  },
+  {
+   "fila": 58,
+   "fecha": "2026-11-15",
+   "concepto": "venta 2 lechones",
+   "tipo": "venta de lechones",
+   "socio": null,
+   "nota": null,
+   "cantidad": null,
+   "precio": null,
+   "entrada": 4700,
    "salida": 0,
    "cat": "Ventas"
   }
