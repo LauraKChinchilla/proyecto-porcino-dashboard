@@ -1,10 +1,10 @@
 {
- "generado": "2026-11-18T00:30:58.079Z",
+ "generado": "2026-11-18T00:32:02.459Z",
  "fuente": "OneDrive · Proyecto_Porcino",
  "archivos": [
   {
    "nombre": "Granja_Porcina_Facil.xlsx",
-   "modificado": "2026-11-18T00:30:44Z",
+   "modificado": "2026-11-18T00:31:43Z",
    "por": "Guest Contributor"
   }
  ],
@@ -710,6 +710,19 @@
    "entrada": 4700,
    "salida": 0,
    "cat": "Ventas"
+  },
+  {
+   "fila": 59,
+   "fecha": "2026-11-16",
+   "concepto": "compra de 5 bolsas de concentrado",
+   "tipo": "Concentrado",
+   "socio": null,
+   "nota": null,
+   "cantidad": null,
+   "precio": null,
+   "entrada": 0,
+   "salida": 3520,
+   "cat": "Concentrado"
   }
  ],
  "aportes": [
