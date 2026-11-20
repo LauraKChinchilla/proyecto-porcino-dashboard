@@ -1,10 +1,10 @@
 {
- "generado": "2026-11-20T21:17:01.102Z",
+ "generado": "2026-11-20T21:18:04.302Z",
  "fuente": "OneDrive · Proyecto_Porcino",
  "archivos": [
   {
    "nombre": "Granja_Porcina_Facil.xlsx",
-   "modificado": "2026-11-20T21:16:28Z",
+   "modificado": "2026-11-20T21:17:34Z",
    "por": "Guest Contributor"
   }
  ],
@@ -2492,7 +2492,7 @@
    "entrada": null,
    "estado": "Activa",
    "salida": null,
-   "nota": null
+   "nota": "hay una que se murio"
   },
   {
    "codigo": "18",
