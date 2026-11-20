@@ -1,10 +1,10 @@
 {
- "generado": "2026-11-20T21:14:54.320Z",
+ "generado": "2026-11-20T21:15:57.961Z",
  "fuente": "OneDrive · Proyecto_Porcino",
  "archivos": [
   {
    "nombre": "Granja_Porcina_Facil.xlsx",
-   "modificado": "2026-11-20T21:14:43Z",
+   "modificado": "2026-11-20T21:15:48Z",
    "por": "Guest Contributor"
   }
  ],
@@ -762,6 +762,19 @@
    "entrada": 22000,
    "salida": 0,
    "cat": "Ventas"
+  },
+  {
+   "fila": 63,
+   "fecha": "2026-11-19",
+   "concepto": "pago de flete de 25 bolsas",
+   "tipo": "Flete / comisión",
+   "socio": null,
+   "nota": null,
+   "cantidad": null,
+   "precio": null,
+   "entrada": 0,
+   "salida": 2000,
+   "cat": "Flete / comisión"
   }
  ],
  "aportes": [
